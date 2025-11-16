@@ -53,7 +53,7 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: radial-gradient(ellipse at center, #1b5e1b 0%, #0a3d0a 70%);
+      background: linear-gradient(to bottom, #1b5e1b 0%, #0a3d0a 100%);
     }
     
     .garden-particles {
@@ -362,101 +362,6 @@
       left: 100%;
     }
     
-    .growth-screen {
-      background: transparent;
-      padding: var(--section-spacing);
-      justify-content: center;
-    }
-    
-    .growth-title {
-      text-align: center;
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      margin-bottom: clamp(30px, 6vw, 50px);
-      color: #ffd700;
-      font-family: 'Dancing Script', cursive;
-      text-shadow: 0 0 20px rgba(255,215,0,0.5);
-      line-height: 1.2;
-      padding: 0 15px;
-    }
-    
-    .growth-stages {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(300px, 90vw), 1fr));
-      gap: clamp(20px, 4vw, 30px);
-      max-width: 1200px;
-      width: 95%;
-      margin: 0 auto clamp(30px, 6vw, 50px) auto;
-    }
-    
-    .growth-stage {
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(20px);
-      border-radius: var(--border-radius);
-      padding: clamp(20px, 4vw, 30px);
-      border: 2px solid rgba(50,205,50,0.3);
-      transition: var(--transition);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      min-height: 280px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    }
-    
-    .growth-stage::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, rgba(50,205,50,0.1) 0%, transparent 70%);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    
-    .growth-stage:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 15px 35px rgba(50,205,50,0.3);
-      border-color: rgba(50,205,50,0.8);
-    }
-    
-    .growth-stage:hover::before {
-      opacity: 1;
-    }
-    
-    .growth-icon {
-      font-size: clamp(3rem, 7vw, 4rem);
-      text-align: center;
-      margin-bottom: clamp(15px, 3vw, 20px);
-      animation: growthPulse 3s ease-in-out infinite;
-    }
-    
-    @keyframes growthPulse {
-      0%, 100% { transform: scale(1); filter: brightness(1); }
-      50% { transform: scale(1.1); filter: brightness(1.3); }
-    }
-    
-    .growth-stage-title {
-      font-size: clamp(1.3rem, 3.5vw, 1.6rem);
-      color: #32CD32;
-      margin-bottom: clamp(12px, 2.5vw, 15px);
-      text-align: center;
-      font-family: 'Dancing Script', cursive;
-      font-weight: bold;
-    }
-    
-    .growth-description {
-      font-size: clamp(0.9rem, 2.2vw, 1.1rem);
-      line-height: 1.6;
-      text-align: center;
-      opacity: 0.9;
-    }
-    
     .bloom-screen {
       background: transparent;
       text-align: center;
@@ -594,267 +499,82 @@
       padding: 0 15px;
     }
     
+    .meanings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(300px, 90vw), 1fr));
+      gap: clamp(20px, 4vw, 30px);
+      max-width: 1200px;
+      width: 95%;
+      margin: 0 auto clamp(30px, 6vw, 50px) auto;
+    }
+    
     .meaning-card {
       background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
       border-radius: var(--border-radius);
-      padding: clamp(25px, 4vw, 35px);
-      margin: clamp(20px, 4vw, 30px) 0;
-      box-shadow: var(--shadow);
-      border-left: 5px solid #ff69b4;
+      padding: clamp(20px, 4vw, 30px);
+      border: 2px solid rgba(50,205,50,0.3);
       transition: var(--transition);
+      cursor: pointer;
       position: relative;
       overflow: hidden;
-      backdrop-filter: blur(10px);
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
     
     .meaning-card::before {
       content: '';
       position: absolute;
       top: 0;
-      left: -100%;
+      left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-      transition: left 0.6s;
-    }
-    
-    .meaning-card:hover::before {
-      left: 100%;
+      background: radial-gradient(circle at center, rgba(50,205,50,0.1) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
     }
     
     .meaning-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-    }
-    
-    .meaning-title {
-      font-size: clamp(1.4rem, 3.5vw, 1.8rem);
-      color: #ff69b4;
-      margin-bottom: clamp(15px, 3vw, 20px);
-      text-align: center;
-      font-family: 'Dancing Script', cursive;
-      font-weight: bold;
-    }
-    
-    .meaning-content {
-      font-size: clamp(1rem, 2.2vw, 1.1rem);
-      line-height: 1.7;
-      text-align: justify;
-      white-space: pre-line;
-    }
-    
-    .poem-card {
-      background: linear-gradient(145deg, rgba(255,105,180,0.1), rgba(50,205,50,0.1));
-      border-left: 5px solid #32CD32;
-    }
-    
-    .poem-card .meaning-title {
-      color: #32CD32;
-    }
-    
-    .memories-screen {
-      background: transparent;
-      padding: var(--section-spacing);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    
-    .memories-container {
-      max-width: 1100px;
-      width: 95%;
-      margin: 0 auto;
-    }
-    
-    .memories-title {
-      text-align: center;
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      margin-bottom: clamp(35px, 7vw, 60px);
-      color: var(--tulip-yellow);
-      font-family: 'Dancing Script', cursive;
-      line-height: 1.2;
-      padding: 0 15px;
-    }
-    
-    .memory-timeline {
-      position: relative;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    
-    .memory-timeline::before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-      background: linear-gradient(to bottom, var(--tulip-yellow), var(--accent2), var(--accent3));
-      transform: translateX(-50%);
-      box-shadow: 0 0 10px var(--tulip-yellow);
-    }
-    
-    .memory-item {
-      position: relative;
-      margin-bottom: clamp(30px, 5vw, 50px);
-      width: 45%;
-      padding: clamp(20px, 3vw, 25px);
-      background: rgba(255,255,255,0.1);
-      border-radius: 15px;
-      backdrop-filter: blur(10px);
-      transition: var(--transition);
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-    
-    .memory-item:hover {
       transform: translateY(-8px);
-      background: rgba(255,255,255,0.15);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 15px 35px rgba(50,205,50,0.3);
+      border-color: rgba(50,205,50,0.8);
     }
     
-    .memory-item:nth-child(odd) {
-      left: 0;
+    .meaning-card:hover::before {
+      opacity: 1;
     }
     
-    .memory-item:nth-child(even) {
-      left: 55%;
+    .meaning-icon {
+      font-size: clamp(3rem, 7vw, 4rem);
+      text-align: center;
+      margin-bottom: clamp(15px, 3vw, 20px);
+      animation: meaningPulse 3s ease-in-out infinite;
     }
     
-    .memory-item::before {
-      content: '';
-      position: absolute;
-      top: 25px;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--tulip-yellow);
-      box-shadow: 0 0 10px var(--tulip-yellow);
-      transition: var(--transition);
+    @keyframes meaningPulse {
+      0%, 100% { transform: scale(1); filter: brightness(1); }
+      50% { transform: scale(1.1); filter: brightness(1.3); }
     }
     
-    .memory-item:hover::before {
-      transform: scale(1.2);
-      box-shadow: 0 0 15px var(--tulip-yellow);
-    }
-    
-    .memory-item:nth-child(odd)::before {
-      right: -52px;
-    }
-    
-    .memory-item:nth-child(even)::before {
-      left: -52px;
-    }
-    
-    .memory-date {
-      font-size: clamp(1.1rem, 2.8vw, 1.3rem);
-      color: var(--tulip-yellow);
-      margin-bottom: clamp(10px, 2vw, 12px);
-      font-weight: bold;
+    .meaning-card-title {
+      font-size: clamp(1.3rem, 3.5vw, 1.6rem);
+      color: #32CD32;
+      margin-bottom: clamp(12px, 2.5vw, 15px);
+      text-align: center;
       font-family: 'Dancing Script', cursive;
+      font-weight: bold;
     }
     
-    .memory-content {
+    .meaning-description {
       font-size: clamp(0.9rem, 2.2vw, 1.1rem);
       line-height: 1.6;
-    }
-    
-    .messages-screen {
-      background: transparent;
-      padding: var(--section-spacing);
-      justify-content: center;
-    }
-    
-    .messages-title {
       text-align: center;
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      margin-bottom: clamp(30px, 6vw, 50px);
-      color: #ffd700;
-      font-family: 'Dancing Script', cursive;
-      line-height: 1.2;
-      padding: 0 15px;
-    }
-    
-    .message-selector {
-      display: flex;
-      flex-wrap: wrap;
-      gap: clamp(12px, 2.5vw, 15px);
-      justify-content: center;
-      margin-bottom: clamp(25px, 5vw, 40px);
-    }
-    
-    .message-button {
-      background: rgba(255,255,255,0.2);
-      border: 2px solid rgba(255,215,0,0.5);
-      color: var(--text-light);
-      padding: clamp(12px, 2.5vw, 14px) clamp(18px, 3.5vw, 22px);
-      border-radius: 25px;
-      cursor: pointer;
-      transition: var(--transition);
-      font-size: clamp(0.9rem, 2.2vw, 1rem);
-      backdrop-filter: blur(10px);
-      position: relative;
-      overflow: hidden;
-      min-width: 140px;
-    }
-    
-    .message-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transition: left 0.5s;
-    }
-    
-    .message-button:hover::before, .message-button.active::before {
-      left: 100%;
-    }
-    
-    .message-button:hover, .message-button.active {
-      background: rgba(255,215,0,0.3);
-      border-color: var(--tulip-yellow);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(255,215,0,0.3);
-    }
-    
-    .message-display {
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(20px);
-      border-radius: var(--border-radius);
-      padding: clamp(25px, 4vw, 35px);
-      min-height: 220px;
-      text-align: center;
-      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-      line-height: 1.6;
-      border: 2px solid rgba(255,215,0,0.3);
-      transition: var(--transition);
-      width: 95%;
-      max-width: 800px;
-      margin: 0 auto;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    }
-    
-    .message-display::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-      transition: left 0.6s;
-    }
-    
-    .message-display:hover::before {
-      left: 100%;
+      opacity: 0.9;
     }
     
     .final-screen {
@@ -1363,27 +1083,11 @@
         height: 300px;
       }
       
-      .memory-item {
-        padding: 15px;
-        width: calc(100% - 45px);
-        left: 45px !important;
-      }
-      
       .meaning-card {
         padding: 18px;
       }
       
-      .message-selector {
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .message-button {
-        width: 100%;
-        max-width: 220px;
-      }
-      
-      .growth-stages {
+      .meanings-grid {
         grid-template-columns: 1fr;
         gap: 15px;
       }
@@ -1448,37 +1152,13 @@
         justify-content: flex-start;
       }
       
-      .memory-timeline::before {
-        left: 25px;
-      }
-      
-      .memory-item {
-        width: calc(100% - 55px);
-        left: 55px !important;
-        margin-bottom: 30px;
-      }
-      
-      .memory-item::before {
-        left: -45px !important;
-      }
-      
-      .growth-stages {
+      .meanings-grid {
         grid-template-columns: 1fr;
         gap: 20px;
       }
       
       .tulip-garden {
         height: 350px;
-      }
-      
-      .message-selector {
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .message-button {
-        width: 100%;
-        max-width: 240px;
       }
       
       .garden-title {
@@ -1500,11 +1180,6 @@
       .nav-menu {
         width: 280px;
         left: -280px;
-      }
-      
-      .meaning-content {
-        text-align: left;
-        font-size: 1rem;
       }
       
       .audio-player {
@@ -1529,17 +1204,9 @@
     }
     
     @media (min-width: 769px) and (max-width: 1024px) {
-      .growth-stages {
+      .meanings-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 25px;
-      }
-      
-      .memory-item {
-        width: 44%;
-      }
-      
-      .memory-item:nth-child(even) {
-        left: 56%;
       }
       
       .tulip-garden {
@@ -1548,13 +1215,13 @@
     }
     
     @media (min-width: 1025px) and (max-width: 1200px) {
-      .growth-stages {
+      .meanings-grid {
         grid-template-columns: repeat(3, 1fr);
       }
     }
     
     @media (min-width: 1201px) {
-      .growth-stages {
+      .meanings-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 30px;
       }
@@ -1649,8 +1316,8 @@
       <div class="song-info">
         <div class="song-icon">🎵</div>
         <div class="song-details">
-          <div class="song-title">Tulipanes en Flor</div>
-          <div class="song-artist">Melodía Especial</div>
+          <div class="song-title">Little Moth</div>
+          <div class="song-artist">Canción Especial</div>
         </div>
       </div>
       
@@ -1705,89 +1372,51 @@
     <div class="bulb-content">
       <h1 class="bulb-title">🌱 Los Bulbos de Nuestro Jardín</h1>
       <div class="bulb-poem">
-        En la tierra fértil de nuestros días,<br>
-        planté bulbos de esperanza y alegrías.<br>
-        Cada uno guardaba un secreto profundo,<br>
-        una promesa de belleza para el mundo.<br><br>
+        <h3 style="color: #ffd700; margin-bottom: 20px; font-family: 'Dancing Script', cursive;">Tú y los Tulipanes</h3>
+        Llegas con el otoño en la mirada,<br>
+        y una tormenta quieta en el jardín;<br>
+        la tristeza, un cristal que no se quiebra,<br>
+        y el mundo, un viejo lienzo en tono gris.<br><br>
         
-        Como el tulipán que duerme en la tierra,<br>
-        nuestra amistad crecía, sin prisa ni guerra.<br>
-        En la oscuridad, raíces se extendían,<br>
-        preparando el milagro que pronto vendría.<br><br>
+        Mas hoy, los tulipanes en su estuche<br>
+        de terciopelo fresco y de color,<br>
+        se inclinan hacia ti con su lenguaje<br>
+        de esperanza sencilla y su frescor.<br><br>
         
-        Con paciencia y cuidado, día tras día,<br>
-        regué con cariño esta simiente mía.<br>
-        Y en el silencio de la tierra oscura,<br>
-        germinaba una conexión fuerte y pura.
+        Ellos, que bajo el suelo más oscuro,<br>
+        esperaron la luz del nuevo día,<br>
+        saben que el invierno siempre es seguro,<br>
+        pero que es más segura la alegría.<br><br>
+        
+        La vida no te debe solo espinas,<br>
+        ni el frío de una ausencia o un adiós;<br>
+        te debe las mañanas carmesías,<br>
+        y el canto que nace después del no.<br><br>
+        
+        Te debe el sol que besa los pétalos,<br>
+        el rocío que pinta el amanecer,<br>
+        el coro de las aves en los árboles,<br>
+        y la calma que llega después del querer.<br><br>
+        
+        Te debe, sobre todo, la certeza<br>
+        de que eres bella como el tulipán:<br>
+        única en tu esencia y tu entereza,<br>
+        y en la fuerza que nace del pesar.<br><br>
+        
+        Por eso, desde mi silencio, envío<br>
+        este jardín de versos y color,<br>
+        para que pintes de nuevo tu río,<br>
+        y encuentres en tu alma una canción.<br><br>
+        
+        Desde mi lugar secreto, solo anhelo<br>
+        ser testigo de esa luz en tu mirada.;<br>
+        con ver tu sonrisa, a mí me bastará,<br>
+        como al tulipán, con el sol, le basta brillar.
       </div>
-      <button class="next-button" onclick="showGrowth()">
-        🌿 Ver el Crecimiento 🌿
+      <button class="next-button" onclick="showBloom()">
+        🌸 Ver la Floración 🌸
       </button>
     </div>
-  </div>
-
-  <div id="growthScreen" class="screen">
-    <h1 class="growth-title">🌿 Etapas de Crecimiento</h1>
-    
-    <div class="growth-stages">
-      <div class="growth-stage">
-        <div class="growth-icon">🌱</div>
-        <div class="growth-stage-title">Germinación</div>
-        <div class="growth-description">
-          Como la primera semilla que brota en primavera, nuestros primeros momentos 
-          fueron el inicio de algo hermoso que crecería con el tiempo.
-        </div>
-      </div>
-      
-      <div class="growth-stage">
-        <div class="growth-icon">🌿</div>
-        <div class="growth-stage-title">Desarrollo</div>
-        <div class="growth-description">
-          Cada conversación, cada risa compartida, fue como un nutriente que 
-          fortalecía nuestros lazos y hacía crecer nuestra conexión.
-        </div>
-      </div>
-      
-      <div class="growth-stage">
-        <div class="growth-icon">🌷</div>
-        <div class="growth-stage-title">Florecimiento</div>
-        <div class="growth-description">
-          El momento en que nuestros tulipanes comenzaron a mostrar sus colores, 
-          revelando la belleza única de nuestra amistad especial.
-        </div>
-      </div>
-      
-      <div class="growth-stage">
-        <div class="growth-icon">💖</div>
-        <div class="growth-stage-title">Conexión</div>
-        <div class="growth-description">
-          Como los tulipanes que se inclinan uno hacia el otro, 
-          nuestras almas encontraron armonía en la danza de la vida.
-        </div>
-      </div>
-      
-      <div class="growth-stage">
-        <div class="growth-icon">✨</div>
-        <div class="growth-stage-title">Brillo</div>
-        <div class="growth-description">
-          La luz que emanas ilumina cada pétalo de nuestro jardín, 
-          haciendo que cada tulipán brille con intensidad y belleza.
-        </div>
-      </div>
-      
-      <div class="growth-stage">
-        <div class="growth-icon">🌼</div>
-        <div class="growth-stage-title">Renovación</div>
-        <div class="growth-description">
-          Como los tulipanes que regresan cada primavera, 
-          nuestra conexión se renueva y fortalece con cada nuevo día.
-        </div>
-      </div>
-    </div>
-    
-    <button class="next-button" onclick="showBloom()">
-      🌸 Ver la Floración 🌸
-    </button>
   </div>
 
   <div id="bloomScreen" class="screen">
@@ -1795,7 +1424,7 @@
     
     <div class="tulip-garden-container">
       <div class="tulip-garden" id="tulipGarden">
-        <!-- Los tulipanes se generarán dinámicamente con JavaScript -->
+        <!-- Generar los tulipanes -->
       </div>
       <div class="garden-sparkles">
         <div class="garden-sparkle" style="animation-delay: 0s;">✨</div>
@@ -1809,9 +1438,7 @@
     
     <div class="garden-description">
       <p>
-        Cada tulipán en este jardín representa un momento especial, una risa compartida, 
-        una conversación profunda. Juntos forman un paisaje de belleza y conexión que 
-        sigue creciendo y floreciendo con el tiempo.
+        Mira este campo, un susurro de colores donde la tierra rompe su silencio en pétalos. Cada tulipán es una promesa cumplida, una prueba de que la belleza siempre vence a la tierra oscura. Hoy, al ver cómo se inclinan hacia la luz, no pude evitar pensar en ti. Porque tú también has pasado tu invierno, y estás a punto de florecer con una fuerza que dejará sin aliento al mundo. La vida no solo te debe sonrisas, te debe un jardín entero para que camines y recuerdes quién eres: la primavera hecha persona.
       </p>
     </div>
     
@@ -1824,103 +1451,81 @@
     <div class="meanings-container">
       <h1 class="meanings-title">📜 Los Tulipanes y Sus Significados 📜</h1>
       
-      <div class="meaning-card">
-        <div class="meaning-title">💝 Tulipán Rojo - Amor Verdadero</div>
-        <div class="meaning-content">El tulipán rojo simboliza un amor profundo y apasionado. Como los pétalos rojos que se abren al sol, mi admiración por ti crece cada día con intensidad y sinceridad. Eres esa persona especial que ilumina mi mundo con tu presencia.</div>
+      <div class="meanings-grid">
+        <div class="meaning-card">
+          <div class="meaning-icon">❤️</div>
+          <div class="meaning-card-title">Tulipán Rojo</div>
+          <div class="meaning-description">
+            Amor verdadero y pasión profunda. Como los pétalos rojos que se abren al sol, mi admiración por ti crece cada día con intensidad y sinceridad.
+          </div>
+        </div>
+        
+        <div class="meaning-card">
+          <div class="meaning-icon">😊</div>
+          <div class="meaning-card-title">Tulipán Amarillo</div>
+          <div class="meaning-description">
+            Alegría radiante y luz del sol. Tu risa es como un rayo de sol en un día nublado, capaz de iluminar cualquier oscuridad.
+          </div>
+        </div>
+        
+        <div class="meaning-card">
+          <div class="meaning-icon">🤗</div>
+          <div class="meaning-card-title">Tulipán Rosa</div>
+          <div class="meaning-description">
+            Cariño y afecto sincero. Como los delicados pétalos rosados, nuestra conexión es suave pero fuerte, llena de ternura y comprensión.
+          </div>
+        </div>
+        
+        <div class="meaning-card">
+          <div class="meaning-icon">✨</div>
+          <div class="meaning-card-title">Tulipán Púrpura</div>
+          <div class="meaning-description">
+            Realeza y admiración. Admiro tu fuerza, tu sensibilidad y tu capacidad para ver belleza donde otros solo ven ordinario.
+          </div>
+        </div>
+        
+        <div class="meaning-card">
+          <div class="meaning-icon">🌷</div>
+          <div class="meaning-card-title">Tulipán Blanco</div>
+          <div class="meaning-description">
+            Pureza y nuevos comienzos. Eres como el tulipán más raro y especial del jardín, único en tu esencia y belleza.
+          </div>
+        </div>
+        
+        <div class="meaning-card">
+          <div class="meaning-icon">💖</div>
+          <div class="meaning-card-title">Tulipán Multicolor</div>
+          <div class="meaning-description">
+            Belleza única y complejidad. Eres una obra de arte compuesta de contrastes, especial precisamente por tus matices únicos.
+          </div>
+        </div>
       </div>
       
-      <div class="meaning-card poem-card">
-        <div class="meaning-title">🌼 Tulipán Amarillo - Alegría Radiante</div>
-        <div class="meaning-content">El tulipán amarillo representa la alegría y la luz del sol. Tu risa es como un rayo de sol en un día nublado, capaz de iluminar cualquier oscuridad. Cada momento a tu lado se llena de luz y felicidad genuina.</div>
-      </div>
-      
-      <div class="meaning-card">
-        <div class="meaning-title">🌷 Tulipán Rosa - Cariño y Afecto</div>
-        <div class="meaning-content">El tulipán rosa simboliza el cariño y el afecto sincero. Como los delicados pétalos rosados, nuestra conexión es suave pero fuerte, llena de ternura y comprensión mutua. Eres ese amigo especial que valoro profundamente.</div>
-      </div>
-      
-      <button class="next-button" onclick="showMemories()">
-        🕰️ Nuestro Jardín en el Tiempo 🕰️
+      <button class="next-button" onclick="showFinal()">
+        ✨ Nuestro Jardín Eterno ✨
       </button>
     </div>
-  </div>
-
-  <div id="memoriesScreen" class="screen">
-    <div class="memories-container">
-      <h1 class="memories-title">🕰️ Nuestro Jardín en el Tiempo</h1>
-      
-      <div class="memory-timeline">
-        <div class="memory-item">
-          <div class="memory-date">Primera Semilla</div>
-          <div class="memory-content">El momento en que plantamos la primera semilla de nuestra amistad, sin saber que crecería hasta convertirse en este hermoso jardín de tulipanes.</div>
-        </div>
-        
-        <div class="memory-item">
-          <div class="memory-date">Primeros Brotes</div>
-          <div class="memory-content">Cuando comenzamos a conocernos realmente y aparecieron los primeros brotes de confianza y complicidad entre nosotros.</div>
-        </div>
-        
-        <div class="memory-item">
-          <div class="memory-date">Crecimiento</div>
-          <div class="memory-content">Cada conversación, cada risa compartida, fue como un nutriente que fortalecía nuestros lazos y hacía crecer nuestra conexión.</div>
-        </div>
-        
-        <div class="memory-item">
-          <div class="memory-date">Floración</div>
-          <div class="memory-content">El momento en que nuestros tulipanes comenzaron a mostrar sus colores, revelando la belleza única de nuestra amistad especial.</div>
-        </div>
-      </div>
-      
-      <button class="next-button" onclick="showMessages()">
-        💌 Mensajes entre Pétalos 💌
-      </button>
-    </div>
-  </div>
-
-  <div id="messagesScreen" class="screen">
-    <h1 class="messages-title">💌 Mensajes entre Pétalos 💌</h1>
-    
-    <div class="message-selector">
-      <button class="message-button" onclick="showMessage(0, this)">❤️ Amor</button>
-      <button class="message-button" onclick="showMessage(1, this)">😊 Alegría</button>
-      <button class="message-button" onclick="showMessage(2, this)">🤗 Amistad</button>
-      <button class="message-button" onclick="showMessage(3, this)">✨ Admiración</button>
-      <button class="message-button" onclick="showMessage(4, this)">🌷 Gratitud</button>
-    </div>
-    
-    <div class="message-display" id="messageDisplay">
-      <div style="font-size: 2.5rem; margin-bottom: 20px;">🌷</div>
-      <p>Selecciona un mensaje para descubrir algo especial...</p>
-    </div>
-    
-    <button class="next-button" onclick="showFinal()">
-      🎉 Nuestro Jardín Eterno 🎉
-    </button>
   </div>
 
   <div id="finalScreen" class="screen">
     <div class="final-content">
-      <h1 class="final-title">✨ Nuestro Jardín Eterno ✨</h1>
+      <h1 class="final-title">✨ Para Mi Tulipán Más Especial ✨</h1>
       
       <p class="final-text">
-        Como los tulipanes que regresan cada primavera con renovada belleza, 
-        nuestra conexión seguirá floreciendo a través del tiempo. 
-        Cada estación traerá nuevos colores, nuevos matices, pero la esencia permanecerá.
+        Te dedico este jardín, no como quien ofrece flores, sino como quien devuelve a la tierra un fragmento de su propio sueño. Que cada tulipán sea una palabra de un poema que la primavera escribe para ti; que su suave inclinación no sea hacia la luz, sino hacia el hermoso sol que representa Wilmagy, en una reverencia silenciosa y colorida.
       </p>
       
       <p class="final-highlight">
-        <strong>Eres el jardín más hermoso que he tenido el privilegio de cultivar.</strong>
+        Pues este fulgor no es más que el reflejo de tu espíritu floreciendo - un presagio en colores de la alegría que, imparable, ya se abre camino hacia ti.
       </p>
       
       <p class="final-text">
-        Que este jardín digital sea un recordatorio de lo especial que eres, 
-        de la belleza que aportas al mundo y del cariño sincero que siento por ti. 
-        Como los tulipanes que se inclinan hacia la luz, yo me inclino hacia tu esencia luminosa.
+        Que este detalle sea un recordatorio de lo especial que eres, de la belleza que aportas al mundo y de la admiración sincera que siento por ti.
       </p>
       
       <div class="final-signature">
-        Con todo mi cariño 💖<br>
-        <span style="color: #ff69b4;">Para Wilmagy, mi tulipán más especial</span>
+        Para ti, niña risueña que al igual que el sol,<br>
+        eres mi tulipán más especial 🌷
       </div>
     </div>
     
@@ -1956,15 +1561,13 @@
   </audio>
 
   <audio id="mainAudio" preload="metadata">
-    <!-- Puedes reemplazar esta URL con tu propia música -->
-    <source src="https://assets.mixkit.co/music/preview/mixkit-garden-389.mp3" type="audio/mpeg">
+    <source src="Little Moth.mp3" type="audio/mpeg">
   </audio>
 
   <script>
     const screens = [
-      'welcomeScreen', 'bulbScreen', 'growthScreen', 
-      'bloomScreen', 'meaningsScreen', 'memoriesScreen', 
-      'messagesScreen', 'finalScreen', 'gardenRealScreen'
+      'welcomeScreen', 'bulbScreen', 'bloomScreen', 
+      'meaningsScreen', 'finalScreen', 'gardenRealScreen'
     ];
     let currentScreen = 0;
     const clickSound = document.getElementById('clickSound');
@@ -1994,7 +1597,7 @@
       setInterval(() => {
         const particle = document.createElement('div');
         particle.classList.add('particle');
-        const particles = ['✨', '🌟', '💫', '⭐', '🌠', '🌷', '🌸'];
+        const particles = ['🌷', '🌸', '🌹', '💐', '🌺', '🌻', '🌼'];
         particle.textContent = particles[Math.floor(Math.random() * particles.length)];
         particle.style.left = Math.random() * 100 + 'vw';
         particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
@@ -2165,24 +1768,12 @@
       showScreen('bulbScreen');
     }
     
-    function showGrowth() {
-      showScreen('growthScreen');
-    }
-    
     function showBloom() {
       showScreen('bloomScreen');
     }
     
     function showMeanings() {
       showScreen('meaningsScreen');
-    }
-    
-    function showMemories() {
-      showScreen('memoriesScreen');
-    }
-    
-    function showMessages() {
-      showScreen('messagesScreen');
     }
     
     function showFinal() {
@@ -2210,55 +1801,6 @@
     function goHome() {
       showScreen('welcomeScreen');
       currentScreen = 0;
-    }
-    
-    const messages = [
-      {
-        icon: "❤️",
-        title: "Amor y Admiración",
-        content: "Como el tulipán rojo que simboliza el amor verdadero, mi admiración por ti crece cada día. Eres una persona extraordinaria que ilumina el mundo con tu presencia."
-      },
-      {
-        icon: "😊",
-        title: "Alegría y Luz",
-        content: "Tu risa es como un campo de tulipanes amarillos bajo el sol de primavera. Llena de luz, calidez y una alegría contagiosa que hace que cada día sea más brillante."
-      },
-      {
-        icon: "🤗",
-        title: "Amistad Sincera",
-        content: "Nuestra amistad es como un jardín de tulipanes rosados: delicada pero fuerte, llena de cariño y comprensión mutua. Valoro cada momento que compartimos."
-      },
-      {
-        icon: "✨",
-        title: "Admiración Profunda",
-        content: "Admiro tu fuerza, tu sensibilidad y tu capacidad para ver belleza donde otros solo ven ordinario. Eres como el tulipán más raro y especial del jardín."
-      },
-      {
-        icon: "🌷",
-        title: "Gratitud Eterna",
-        content: "Estoy agradecido por cada conversación, cada risa compartida, cada momento de complicidad. Eres un regalo en mi vida que atesoro profundamente."
-      }
-    ];
-    
-    function showMessage(index, button) {
-      playSound(clickSound);
-      document.querySelectorAll('.message-button').forEach(btn => btn.classList.remove('active'));
-      button.classList.add('active');
-      
-      const message = messages[index];
-      const display = document.getElementById('messageDisplay');
-      
-      display.style.opacity = 0;
-      
-      setTimeout(() => {
-        display.innerHTML = `
-          <div style="font-size: 3rem; margin-bottom: 20px; animation: messageAppear 0.5s ease-out;">${message.icon}</div>
-          <h3 style="font-size: 1.8rem; color: #ffd700; margin-bottom: 20px; animation: messageAppear 0.5s ease-out 0.2s both;">${message.title}</h3>
-          <p style="font-size: 1.3rem; line-height: 1.6; animation: messageAppear 0.5s ease-out 0.4s both;">${message.content}</p>
-        `;
-        
-        display.style.opacity = 1;
-      }, 300);
     }
     
     function createTulipGarden() {
@@ -2315,12 +1857,12 @@
       }
     }
     
-    document.querySelectorAll('.growth-stage').forEach(stage => {
-      stage.addEventListener('click', () => {
+    document.querySelectorAll('.meaning-card').forEach(card => {
+      card.addEventListener('click', () => {
         playSound(clickSound);
-        stage.style.transform = 'translateY(-5px) scale(1.02)';
+        card.style.transform = 'translateY(-5px) scale(1.02)';
         setTimeout(() => {
-          stage.style.transform = '';
+          card.style.transform = '';
         }, 300);
       });
     });
@@ -2336,26 +1878,6 @@
         }, 1000);
       });
     }
-    
-    document.querySelectorAll('.memory-item').forEach(item => {
-      item.addEventListener('click', () => {
-        playSound(clickSound);
-        item.style.transform = 'translateY(-5px) scale(1.02)';
-        setTimeout(() => {
-          item.style.transform = '';
-        }, 300);
-      });
-    });
-    
-    document.querySelectorAll('.meaning-card').forEach(card => {
-      card.addEventListener('click', () => {
-        playSound(clickSound);
-        card.style.transform = 'translateY(-3px) scale(1.01)';
-        setTimeout(() => {
-          card.style.transform = '';
-        }, 300);
-      });
-    });
     
     let gardenAnimationId = null;
     let gardenTulips = [];
@@ -2402,7 +1924,7 @@
       ];
       
       // Crear tulipanes iniciales
-      for (let i = 0; i < 15; i++) {
+      for (let i = 0; i < 25; i++) {
         const color = tulipColors[Math.floor(Math.random() * tulipColors.length)];
         gardenTulips.push({
           x: Math.random() * canvas.width,
@@ -2431,23 +1953,38 @@
     }
     
     function animateGarden(canvas, ctx) {
-      ctx.fillStyle = 'rgba(10, 61, 10, 0.3)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Fondo con gradiente de cielo y suelo
+      const skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height * 0.7);
+      skyGradient.addColorStop(0, '#87CEEB');
+      skyGradient.addColorStop(1, '#98FB98');
+      
+      ctx.fillStyle = skyGradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height * 0.7);
+      
+      // Montañas en el fondo
+      ctx.fillStyle = '#2E8B57';
+      ctx.beginPath();
+      ctx.moveTo(0, canvas.height * 0.7);
+      for (let i = 0; i < canvas.width; i += 50) {
+        ctx.lineTo(i, canvas.height * 0.7 - Math.sin(i * 0.01) * 30 - Math.random() * 20);
+      }
+      ctx.lineTo(canvas.width, canvas.height * 0.7);
+      ctx.fill();
       
       // Dibujar suelo
-      const soilGradient = ctx.createLinearGradient(0, canvas.height - 50, 0, canvas.height);
+      const soilGradient = ctx.createLinearGradient(0, canvas.height * 0.7, 0, canvas.height);
       soilGradient.addColorStop(0, '#8B4513');
       soilGradient.addColorStop(1, '#5D4037');
       
       ctx.fillStyle = soilGradient;
-      ctx.fillRect(0, canvas.height - 50, canvas.width, 50);
+      ctx.fillRect(0, canvas.height * 0.7, canvas.width, canvas.height * 0.3);
       
       // Dibujar hierba
       ctx.fillStyle = '#2E7D32';
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 200; i++) {
         const x = Math.random() * canvas.width;
         const height = 5 + Math.random() * 15;
-        ctx.fillRect(x, canvas.height - 50, 2, -height);
+        ctx.fillRect(x, canvas.height * 0.7, 2, -height);
       }
       
       // Actualizar y dibujar tulipanes
