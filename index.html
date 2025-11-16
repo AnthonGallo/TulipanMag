@@ -1689,13 +1689,13 @@
       
       for (let i = 0; i < 15; i++) {
         const color = tulipColors[Math.floor(Math.random() * tulipColors.length)];
-        const tulipSize = Math.min(canvas.width, canvas.height) * 0.03;
+        const tulipSize = Math.min(canvas.width, canvas.height) * 0.08;
         
         gardenTulips.push({
           x: Math.random() * canvas.width,
           y: canvas.height - 50 - Math.random() * 100,
-          stemHeight: 80 + Math.random() * 60,
-          stemWidth: 3 + Math.random() * 2,
+          stemHeight: 120 + Math.random() * 80,
+          stemWidth: 4 + Math.random() * 2,
           bloomSize: tulipSize,
           color: color,
           bloomProgress: Math.random(),
@@ -1707,8 +1707,8 @@
       }
     }
     
-    function drawRealisticTulip(ctx, tulip) {
-      const swayX = Math.sin(tulip.sway) * 5;
+    function drawBeautifulTulip(ctx, tulip) {
+      const swayX = Math.sin(tulip.sway) * 8;
       const stemTopY = tulip.y - tulip.stemHeight * tulip.bloomProgress;
       
       ctx.strokeStyle = tulip.color.stem;
@@ -1725,9 +1725,21 @@
         ctx.ellipse(
           tulip.x + swayX * 0.5, 
           leafY, 
-          12, 
-          6, 
+          18, 
+          8, 
           Math.PI/4 + swayX * 0.1, 
+          0, 
+          Math.PI * 2
+        );
+        ctx.fill();
+        
+        ctx.beginPath();
+        ctx.ellipse(
+          tulip.x + swayX * 0.5, 
+          leafY - 25, 
+          15, 
+          6, 
+          -Math.PI/4 + swayX * 0.1, 
           0, 
           Math.PI * 2
         );
@@ -1744,27 +1756,49 @@
         const petalCount = 6;
         for (let i = 0; i < petalCount; i++) {
           const angle = (i / petalCount) * Math.PI * 2;
-          const petalX = tulip.x + swayX + Math.cos(angle) * currentBloomSize * 0.8;
-          const petalY = flowerY + Math.sin(angle) * currentBloomSize * 0.6;
+          const petalX = tulip.x + swayX + Math.cos(angle) * currentBloomSize * 0.9;
+          const petalY = flowerY + Math.sin(angle) * currentBloomSize * 0.7;
           
-          if (i === 0) {
-            ctx.moveTo(petalX, petalY);
-          } else {
-            ctx.lineTo(petalX, petalY);
-          }
+          ctx.save();
+          ctx.translate(petalX, petalY);
+          ctx.rotate(angle);
+          
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.bezierCurveTo(
+            currentBloomSize * 0.6, -currentBloomSize * 0.3,
+            currentBloomSize * 0.8, currentBloomSize * 0.4,
+            0, currentBloomSize * 0.8
+          );
+          ctx.bezierCurveTo(
+            -currentBloomSize * 0.8, currentBloomSize * 0.4,
+            -currentBloomSize * 0.6, -currentBloomSize * 0.3,
+            0, 0
+          );
+          ctx.fill();
+          
+          ctx.restore();
         }
-        ctx.closePath();
-        ctx.fill();
         
         ctx.fillStyle = tulip.color.accent;
         ctx.beginPath();
-        ctx.arc(tulip.x + swayX, flowerY, currentBloomSize * 0.3, 0, Math.PI * 2);
+        ctx.arc(tulip.x + swayX, flowerY, currentBloomSize * 0.4, 0, Math.PI * 2);
         ctx.fill();
         
         ctx.fillStyle = '#000000';
         ctx.beginPath();
-        ctx.arc(tulip.x + swayX, flowerY, currentBloomSize * 0.15, 0, Math.PI * 2);
+        ctx.arc(tulip.x + swayX, flowerY, currentBloomSize * 0.2, 0, Math.PI * 2);
         ctx.fill();
+        
+        ctx.fillStyle = '#FFD700';
+        for (let i = 0; i < 8; i++) {
+          const angle = (i / 8) * Math.PI * 2;
+          const stamenX = tulip.x + swayX + Math.cos(angle) * currentBloomSize * 0.15;
+          const stamenY = flowerY + Math.sin(angle) * currentBloomSize * 0.15;
+          ctx.beginPath();
+          ctx.arc(stamenX, stamenY, currentBloomSize * 0.05, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
     }
     
@@ -1776,29 +1810,40 @@
       ctx.fillStyle = skyGradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height * 0.7);
       
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-      for (let i = 0; i < 3; i++) {
-        const x = (i * 300) % canvas.width;
-        const y = 80 + Math.sin(i) * 20;
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      for (let i = 0; i < 4; i++) {
+        const x = (i * 350) % canvas.width;
+        const y = 60 + Math.sin(i) * 30;
         ctx.beginPath();
-        ctx.arc(x, y, 40, 0, Math.PI * 2);
-        ctx.arc(x + 30, y - 15, 35, 0, Math.PI * 2);
-        ctx.arc(x + 60, y, 40, 0, Math.PI * 2);
+        ctx.arc(x, y, 50, 0, Math.PI * 2);
+        ctx.arc(x + 40, y - 20, 45, 0, Math.PI * 2);
+        ctx.arc(x + 80, y, 50, 0, Math.PI * 2);
         ctx.fill();
       }
       
       const soilGradient = ctx.createLinearGradient(0, canvas.height * 0.7, 0, canvas.height);
       soilGradient.addColorStop(0, '#8B4513');
-      soilGradient.addColorStop(1, '#5D4037');
+      soilGradient.addColorStop(0.5, '#654321');
+      soilGradient.addColorStop(1, '#3E2723');
       
       ctx.fillStyle = soilGradient;
       ctx.fillRect(0, canvas.height * 0.7, canvas.width, canvas.height * 0.3);
       
       ctx.fillStyle = '#2E7D32';
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 150; i++) {
         const x = Math.random() * canvas.width;
-        const height = 3 + Math.random() * 8;
-        ctx.fillRect(x, canvas.height * 0.7, 1, -height);
+        const height = 5 + Math.random() * 12;
+        ctx.fillRect(x, canvas.height * 0.7, 2, -height);
+      }
+      
+      ctx.fillStyle = '#4CAF50';
+      for (let i = 0; i < 50; i++) {
+        const x = Math.random() * canvas.width;
+        const height = 8 + Math.random() * 15;
+        ctx.beginPath();
+        ctx.moveTo(x, canvas.height * 0.7);
+        ctx.quadraticCurveTo(x + 5, canvas.height * 0.7 - height, x, canvas.height * 0.7 - height);
+        ctx.fill();
       }
       
       gardenTulips.forEach(tulip => {
@@ -1810,7 +1855,7 @@
           tulip.bloomProgress -= tulip.growthSpeed;
         }
         
-        drawRealisticTulip(ctx, tulip);
+        drawBeautifulTulip(ctx, tulip);
       });
       
       gardenAnimationId = requestAnimationFrame(() => animateGarden(canvas, ctx));
@@ -1834,13 +1879,13 @@
       ];
       
       const color = tulipColors[Math.floor(Math.random() * tulipColors.length)];
-      const tulipSize = Math.min(canvas.width, canvas.height) * 0.03;
+      const tulipSize = Math.min(canvas.width, canvas.height) * 0.08;
       
       const newTulip = {
         x: Math.random() * canvas.width,
         y: canvas.height - 50 - Math.random() * 100,
-        stemHeight: 80 + Math.random() * 60,
-        stemWidth: 3 + Math.random() * 2,
+        stemHeight: 120 + Math.random() * 80,
+        stemWidth: 4 + Math.random() * 2,
         bloomSize: tulipSize,
         color: color,
         bloomProgress: 0,
