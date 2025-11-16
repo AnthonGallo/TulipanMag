@@ -1,0 +1,2682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🌷 Tulipanes para Wilmagy 🌷</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    :root {
+      --primary: #8B4513;
+      --secondary: #228B22;
+      --accent: #FF69B4;
+      --accent2: #FF1493;
+      --accent3: #32CD32;
+      --tulip-red: #FF6B6B;
+      --tulip-pink: #FFB6C1;
+      --tulip-yellow: #FFD700;
+      --tulip-purple: #9370DB;
+      --tulip-white: #F5F5F5;
+      --text-light: #ffffff;
+      --text-dark: #2c2c54;
+      --shadow: 0 10px 30px rgba(0,0,0,0.2);
+      --shadow-light: 0 5px 15px rgba(0,0,0,0.1);
+      --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      --transition-fast: all 0.2s ease;
+      --border-radius: 20px;
+      --container-padding: clamp(15px, 4vw, 30px);
+      --section-spacing: clamp(30px, 6vw, 60px);
+    }
+    
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #0a3d0a 0%, #1b5e1b 50%, #0a3d0a 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      cursor: default;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+    
+    .garden-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(ellipse at center, #1b5e1b 0%, #0a3d0a 70%);
+    }
+    
+    .garden-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    
+    .particle {
+      position: absolute;
+      color: var(--tulip-yellow);
+      font-size: clamp(8px, 2vw, 12px);
+      animation: float 6s ease-in-out infinite;
+      opacity: 0.8;
+      z-index: 1;
+      text-shadow: 0 0 10px currentColor;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+    
+    .screen {
+      min-height: 100vh;
+      padding: var(--container-padding);
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      display: none;
+      overflow: hidden;
+      color: var(--text-light);
+      width: 100%;
+    }
+    
+    .screen.active {
+      opacity: 1;
+      transform: translateY(0);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      animation: screenFadeIn 0.8s ease-out;
+    }
+    
+    @keyframes screenFadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    .welcome-screen {
+      text-align: center;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+    }
+    
+    .welcome-title {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      margin-bottom: clamp(15px, 4vw, 25px);
+      text-shadow: 0 0 30px rgba(255,215,0,0.8);
+      animation: titleGlow 3s ease-in-out infinite alternate;
+      background: linear-gradient(45deg, #ffd700, #ff69b4, #32CD32, #9370db);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-family: 'Dancing Script', cursive;
+      position: relative;
+      line-height: 1.2;
+    }
+    
+    .welcome-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--tulip-yellow), transparent);
+      animation: shimmer 2s infinite;
+    }
+    
+    @keyframes titleGlow {
+      0% { transform: scale(1); text-shadow: 0 0 20px rgba(255,215,0,0.5); }
+      100% { transform: scale(1.05); text-shadow: 0 0 40px rgba(255,215,0,1); }
+    }
+    
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    
+    .subtitle {
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      margin-bottom: clamp(20px, 5vw, 35px);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      opacity: 0;
+      animation: fadeInUp 2s ease forwards 1s;
+      font-family: 'Dancing Script', cursive;
+      max-width: 90%;
+      line-height: 1.4;
+      padding: 0 10px;
+    }
+    
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    .start-button {
+      background: linear-gradient(145deg, #ff69b4, #32CD32, #ffd700);
+      color: var(--text-light);
+      border: none;
+      padding: clamp(12px, 3vw, 15px) clamp(30px, 5vw, 40px);
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      opacity: 0;
+      animation: fadeInUp 2s ease forwards 2s;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Dancing Script', cursive;
+      z-index: 10;
+      min-width: 200px;
+      max-width: 90%;
+    }
+    
+    .start-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+    
+    .start-button:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(50,205,50,0.6);
+    }
+    
+    .start-button:hover::before {
+      left: 100%;
+    }
+    
+    .bulb-screen {
+      background: transparent;
+      text-align: center;
+      justify-content: center;
+      padding: var(--section-spacing);
+    }
+    
+    .bulb-content {
+      max-width: 900px;
+      width: 95%;
+      z-index: 10;
+      position: relative;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(15px);
+      border-radius: var(--border-radius);
+      padding: clamp(25px, 5vw, 40px);
+      border: 2px solid rgba(139, 69, 19, 0.5);
+      margin: 0 auto;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+    
+    .bulb-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(50, 205, 50, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+      z-index: -1;
+    }
+    
+    .soil-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    
+    .soil-particle {
+      position: absolute;
+      background: #8B4513;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      animation: soilTwinkle 4s ease-in-out infinite;
+    }
+    
+    @keyframes soilTwinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+    
+    .bulb-title {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      margin-bottom: clamp(25px, 5vw, 40px);
+      text-shadow: 0 0 30px rgba(255,255,255,0.8);
+      animation: bulbPulse 4s ease-in-out infinite;
+      font-family: 'Dancing Script', cursive;
+      position: relative;
+      line-height: 1.2;
+      padding: 0 10px;
+    }
+    
+    @keyframes bulbPulse {
+      0%, 100% { color: #ffffff; }
+      25% { color: #ffd700; }
+      50% { color: #32CD32; }
+      75% { color: #ff69b4; }
+    }
+    
+    .bulb-poem {
+      background: rgba(139, 69, 19, 0.2);
+      backdrop-filter: blur(15px);
+      border-radius: var(--border-radius);
+      padding: clamp(20px, 4vw, 30px);
+      margin: clamp(20px, 4vw, 30px) 0;
+      border: 2px solid rgba(139, 69, 19, 0.5);
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      line-height: 1.7;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      font-family: 'Dancing Script', cursive;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .bulb-poem::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.6s;
+    }
+    
+    .bulb-poem:hover::before {
+      left: 100%;
+    }
+    
+    .next-button {
+      background: linear-gradient(145deg, #32CD32, #228B22);
+      color: var(--text-light);
+      border: none;
+      padding: clamp(12px, 2.5vw, 15px) clamp(25px, 4vw, 30px);
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: clamp(20px, 4vw, 30px);
+      transition: var(--transition);
+      box-shadow: 0 8px 25px rgba(50,205,50,0.4);
+      position: relative;
+      overflow: hidden;
+      font-family: 'Dancing Script', cursive;
+      min-width: 220px;
+      max-width: 90%;
+    }
+    
+    .next-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+    
+    .next-button:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 12px 30px rgba(50,205,50,0.6);
+    }
+    
+    .next-button:hover::before {
+      left: 100%;
+    }
+    
+    .growth-screen {
+      background: transparent;
+      padding: var(--section-spacing);
+      justify-content: center;
+    }
+    
+    .growth-title {
+      text-align: center;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      margin-bottom: clamp(30px, 6vw, 50px);
+      color: #ffd700;
+      font-family: 'Dancing Script', cursive;
+      text-shadow: 0 0 20px rgba(255,215,0,0.5);
+      line-height: 1.2;
+      padding: 0 15px;
+    }
+    
+    .growth-stages {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(300px, 90vw), 1fr));
+      gap: clamp(20px, 4vw, 30px);
+      max-width: 1200px;
+      width: 95%;
+      margin: 0 auto clamp(30px, 6vw, 50px) auto;
+    }
+    
+    .growth-stage {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+      border-radius: var(--border-radius);
+      padding: clamp(20px, 4vw, 30px);
+      border: 2px solid rgba(50,205,50,0.3);
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .growth-stage::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(50,205,50,0.1) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .growth-stage:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(50,205,50,0.3);
+      border-color: rgba(50,205,50,0.8);
+    }
+    
+    .growth-stage:hover::before {
+      opacity: 1;
+    }
+    
+    .growth-icon {
+      font-size: clamp(3rem, 7vw, 4rem);
+      text-align: center;
+      margin-bottom: clamp(15px, 3vw, 20px);
+      animation: growthPulse 3s ease-in-out infinite;
+    }
+    
+    @keyframes growthPulse {
+      0%, 100% { transform: scale(1); filter: brightness(1); }
+      50% { transform: scale(1.1); filter: brightness(1.3); }
+    }
+    
+    .growth-stage-title {
+      font-size: clamp(1.3rem, 3.5vw, 1.6rem);
+      color: #32CD32;
+      margin-bottom: clamp(12px, 2.5vw, 15px);
+      text-align: center;
+      font-family: 'Dancing Script', cursive;
+      font-weight: bold;
+    }
+    
+    .growth-description {
+      font-size: clamp(0.9rem, 2.2vw, 1.1rem);
+      line-height: 1.6;
+      text-align: center;
+      opacity: 0.9;
+    }
+    
+    .bloom-screen {
+      background: transparent;
+      text-align: center;
+      justify-content: center;
+      padding: var(--section-spacing);
+    }
+    
+    .bloom-title {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      margin-bottom: clamp(25px, 5vw, 40px);
+      text-shadow: 0 0 20px rgba(255,215,0,0.8);
+      animation: titleShimmer 3s ease-in-out infinite;
+      font-family: 'Dancing Script', cursive;
+      line-height: 1.2;
+      padding: 0 15px;
+    }
+    
+    @keyframes titleShimmer {
+      0%, 100% { color: #ffffff; }
+      50% { color: #ffd700; }
+    }
+    
+    .tulip-garden-container {
+      position: relative;
+      max-width: 800px;
+      width: 95%;
+      margin: clamp(25px, 5vw, 40px) 0;
+    }
+    
+    .tulip-garden {
+      width: 100%;
+      height: 400px;
+      background: rgba(139, 69, 19, 0.3);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      border: 3px solid rgba(139, 69, 19, 0.5);
+      box-shadow: 0 0 30px rgba(50,205,50,0.5);
+    }
+    
+    .tulip {
+      position: absolute;
+      bottom: 0;
+      transition: all 1.5s ease;
+      transform-origin: bottom;
+    }
+    
+    .tulip-stem {
+      width: 8px;
+      height: 0;
+      background: linear-gradient(to top, #228B22, #32CD32);
+      margin: 0 auto;
+      border-radius: 4px 4px 0 0;
+      position: relative;
+    }
+    
+    .tulip-bud {
+      width: 40px;
+      height: 0;
+      background: var(--tulip-color);
+      border-radius: 50% 50% 40% 40%;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      overflow: hidden;
+    }
+    
+    .tulip-petal {
+      position: absolute;
+      background: var(--tulip-color);
+      border-radius: 50% 50% 40% 40%;
+      transform-origin: bottom;
+    }
+    
+    .tulip-leaf {
+      position: absolute;
+      width: 30px;
+      height: 15px;
+      background: #32CD32;
+      border-radius: 50% 0 50% 0;
+      transform-origin: left;
+    }
+    
+    .garden-sparkles {
+      position: absolute;
+      top: -30px;
+      left: -30px;
+      width: calc(100% + 60px);
+      height: calc(100% + 60px);
+      pointer-events: none;
+    }
+    
+    .garden-sparkle {
+      position: absolute;
+      color: var(--tulip-yellow);
+      font-size: clamp(14px, 3vw, 18px);
+      animation: sparkleOrbit 8s linear infinite;
+    }
+    
+    @keyframes sparkleOrbit {
+      0% { transform: rotate(0deg) translateX(180px) rotate(0deg); }
+      100% { transform: rotate(360deg) translateX(180px) rotate(-360deg); }
+    }
+    
+    .garden-description {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      max-width: 700px;
+      width: 95%;
+      margin: 0 auto;
+      line-height: 1.6;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      padding: 0 15px;
+    }
+    
+    .meanings-screen {
+      background: transparent;
+      padding: var(--section-spacing);
+      justify-content: center;
+    }
+    
+    .meanings-container {
+      max-width: 1000px;
+      width: 95%;
+      margin: 0 auto;
+    }
+    
+    .meanings-title {
+      text-align: center;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      margin-bottom: clamp(30px, 6vw, 50px);
+      color: #ff69b4;
+      font-family: 'Dancing Script', cursive;
+      line-height: 1.2;
+      padding: 0 15px;
+    }
+    
+    .meaning-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: var(--border-radius);
+      padding: clamp(25px, 4vw, 35px);
+      margin: clamp(20px, 4vw, 30px) 0;
+      box-shadow: var(--shadow);
+      border-left: 5px solid #ff69b4;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+    
+    .meaning-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+      transition: left 0.6s;
+    }
+    
+    .meaning-card:hover::before {
+      left: 100%;
+    }
+    
+    .meaning-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+    
+    .meaning-title {
+      font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+      color: #ff69b4;
+      margin-bottom: clamp(15px, 3vw, 20px);
+      text-align: center;
+      font-family: 'Dancing Script', cursive;
+      font-weight: bold;
+    }
+    
+    .meaning-content {
+      font-size: clamp(1rem, 2.2vw, 1.1rem);
+      line-height: 1.7;
+      text-align: justify;
+      white-space: pre-line;
+    }
+    
+    .poem-card {
+      background: linear-gradient(145deg, rgba(255,105,180,0.1), rgba(50,205,50,0.1));
+      border-left: 5px solid #32CD32;
+    }
+    
+    .poem-card .meaning-title {
+      color: #32CD32;
+    }
+    
+    .memories-screen {
+      background: transparent;
+      padding: var(--section-spacing);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .memories-container {
+      max-width: 1100px;
+      width: 95%;
+      margin: 0 auto;
+    }
+    
+    .memories-title {
+      text-align: center;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      margin-bottom: clamp(35px, 7vw, 60px);
+      color: var(--tulip-yellow);
+      font-family: 'Dancing Script', cursive;
+      line-height: 1.2;
+      padding: 0 15px;
+    }
+    
+    .memory-timeline {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .memory-timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(to bottom, var(--tulip-yellow), var(--accent2), var(--accent3));
+      transform: translateX(-50%);
+      box-shadow: 0 0 10px var(--tulip-yellow);
+    }
+    
+    .memory-item {
+      position: relative;
+      margin-bottom: clamp(30px, 5vw, 50px);
+      width: 45%;
+      padding: clamp(20px, 3vw, 25px);
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .memory-item:hover {
+      transform: translateY(-8px);
+      background: rgba(255,255,255,0.15);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+    
+    .memory-item:nth-child(odd) {
+      left: 0;
+    }
+    
+    .memory-item:nth-child(even) {
+      left: 55%;
+    }
+    
+    .memory-item::before {
+      content: '';
+      position: absolute;
+      top: 25px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--tulip-yellow);
+      box-shadow: 0 0 10px var(--tulip-yellow);
+      transition: var(--transition);
+    }
+    
+    .memory-item:hover::before {
+      transform: scale(1.2);
+      box-shadow: 0 0 15px var(--tulip-yellow);
+    }
+    
+    .memory-item:nth-child(odd)::before {
+      right: -52px;
+    }
+    
+    .memory-item:nth-child(even)::before {
+      left: -52px;
+    }
+    
+    .memory-date {
+      font-size: clamp(1.1rem, 2.8vw, 1.3rem);
+      color: var(--tulip-yellow);
+      margin-bottom: clamp(10px, 2vw, 12px);
+      font-weight: bold;
+      font-family: 'Dancing Script', cursive;
+    }
+    
+    .memory-content {
+      font-size: clamp(0.9rem, 2.2vw, 1.1rem);
+      line-height: 1.6;
+    }
+    
+    .messages-screen {
+      background: transparent;
+      padding: var(--section-spacing);
+      justify-content: center;
+    }
+    
+    .messages-title {
+      text-align: center;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      margin-bottom: clamp(30px, 6vw, 50px);
+      color: #ffd700;
+      font-family: 'Dancing Script', cursive;
+      line-height: 1.2;
+      padding: 0 15px;
+    }
+    
+    .message-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(12px, 2.5vw, 15px);
+      justify-content: center;
+      margin-bottom: clamp(25px, 5vw, 40px);
+    }
+    
+    .message-button {
+      background: rgba(255,255,255,0.2);
+      border: 2px solid rgba(255,215,0,0.5);
+      color: var(--text-light);
+      padding: clamp(12px, 2.5vw, 14px) clamp(18px, 3.5vw, 22px);
+      border-radius: 25px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: clamp(0.9rem, 2.2vw, 1rem);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      min-width: 140px;
+    }
+    
+    .message-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+    
+    .message-button:hover::before, .message-button.active::before {
+      left: 100%;
+    }
+    
+    .message-button:hover, .message-button.active {
+      background: rgba(255,215,0,0.3);
+      border-color: var(--tulip-yellow);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255,215,0,0.3);
+    }
+    
+    .message-display {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+      border-radius: var(--border-radius);
+      padding: clamp(25px, 4vw, 35px);
+      min-height: 220px;
+      text-align: center;
+      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+      line-height: 1.6;
+      border: 2px solid rgba(255,215,0,0.3);
+      transition: var(--transition);
+      width: 95%;
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .message-display::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.6s;
+    }
+    
+    .message-display:hover::before {
+      left: 100%;
+    }
+    
+    .final-screen {
+      background: transparent;
+      text-align: center;
+      justify-content: center;
+      padding: var(--section-spacing);
+    }
+    
+    .final-content {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+      border-radius: var(--border-radius);
+      padding: clamp(30px, 5vw, 45px);
+      max-width: 900px;
+      width: 95%;
+      margin: clamp(20px, 4vw, 30px) auto;
+      border: 2px solid rgba(255,215,0,0.5);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .final-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.6s;
+    }
+    
+    .final-content:hover::before {
+      left: 100%;
+    }
+    
+    .final-title {
+      font-size: clamp(2rem, 6vw, 4rem);
+      margin-bottom: clamp(20px, 4vw, 30px);
+      text-shadow: 0 0 30px rgba(255,215,0,0.8);
+      font-family: 'Dancing Script', cursive;
+      line-height: 1.2;
+    }
+    
+    .final-text {
+      font-size: clamp(1.1rem, 2.8vw, 1.6rem);
+      line-height: 1.7;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      margin-bottom: clamp(15px, 3vw, 20px);
+    }
+    
+    .final-highlight {
+      font-size: clamp(1.3rem, 3.5vw, 2rem);
+      margin: clamp(20px, 4vw, 30px) 0;
+      color: var(--tulip-yellow);
+      text-shadow: 0 0 20px rgba(255,215,0,0.8);
+      font-family: 'Dancing Script', cursive;
+      font-weight: bold;
+    }
+    
+    .final-signature {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.6rem, 4.5vw, 2.8rem);
+      margin-top: clamp(25px, 5vw, 40px);
+    }
+    
+    .garden-real-screen {
+      background: transparent;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+      padding: 0;
+    }
+    
+    .garden-canvas-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    
+    .garden-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    
+    .garden-title {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      z-index: 3;
+      font-size: clamp(2rem, 6vw, 4rem);
+      color: #ffd700;
+      text-shadow: 0 0 20px rgba(255,215,0,0.8);
+      font-family: 'Dancing Script', cursive;
+      padding: 10px 20px;
+    }
+    
+    .garden-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      width: 100%;
+      z-index: 3;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      transition: transform 0.5s ease;
+    }
+    
+    .garden-controls.hidden {
+      transform: translateY(100px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .garden-control-button {
+      background: rgba(0,0,0,0.7);
+      border: 2px solid rgba(255,215,0,0.5);
+      color: var(--text-light);
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.1rem;
+      backdrop-filter: blur(10px);
+    }
+    
+    .garden-control-button:hover {
+      background: rgba(255,215,0,0.3);
+      transform: translateY(-3px);
+    }
+    
+    .toggle-controls-button {
+      position: absolute;
+      bottom: 85px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background: rgba(0,0,0,0.7);
+      border: 2px solid rgba(255,215,0,0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+    }
+    
+    .toggle-controls-button:hover {
+      background: rgba(255,215,0,0.3);
+      transform: scale(1.1);
+    }
+    
+    .toggle-controls-icon {
+      color: var(--tulip-yellow);
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .toggle-controls-button.hidden .toggle-controls-icon {
+      transform: rotate(180deg);
+    }
+    
+    .nav-toggle {
+      position: fixed;
+      top: clamp(15px, 3vw, 25px);
+      left: clamp(15px, 3vw, 25px);
+      z-index: 1001;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 50%;
+      width: clamp(45px, 9vw, 60px);
+      height: clamp(45px, 9vw, 60px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 2px solid rgba(255,215,0,0.5);
+      transition: var(--transition);
+    }
+    
+    .nav-toggle:hover {
+      transform: scale(1.1);
+      border-color: var(--tulip-yellow);
+      background: rgba(0,0,0,0.9);
+    }
+    
+    .nav-toggle-icon {
+      font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+      color: var(--tulip-yellow);
+      transition: var(--transition);
+    }
+    
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: min(300px, 85vw);
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      transition: var(--transition);
+      padding: 90px 25px 25px 25px;
+      box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+      border-right: 2px solid rgba(255,215,0,0.3);
+    }
+    
+    .nav-menu.active {
+      left: 0;
+    }
+    
+    .nav-menu-item {
+      display: block;
+      width: 100%;
+      padding: clamp(14px, 3vw, 18px);
+      margin-bottom: 12px;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,215,0,0.3);
+      border-radius: 12px;
+      color: var(--text-light);
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.1rem, 2.8vw, 1.4rem);
+    }
+    
+    .nav-menu-item:hover {
+      background: rgba(255,215,0,0.2);
+      transform: translateX(5px);
+    }
+    
+    .nav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+    
+    .nav-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .audio-player {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      width: 320px;
+      max-width: 90vw;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: var(--transition);
+      opacity: 0.95;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(15px);
+      border: 2px solid rgba(255,215,0,0.5);
+    }
+    
+    .audio-player:hover {
+      opacity: 1;
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+    }
+    
+    .audio-player.minimized {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+    
+    .audio-player.minimized .player-content {
+      display: none;
+    }
+    
+    .audio-toggle {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(145deg, #ff69b4, #32CD32);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 2px solid rgba(255,215,0,0.8);
+      z-index: 1001;
+      font-size: 18px;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: var(--transition);
+    }
+    
+    .audio-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+    }
+    
+    .player-content {
+      padding: 20px;
+    }
+    
+    .song-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .song-icon {
+      font-size: 24px;
+      margin-right: 12px;
+      color: var(--tulip-yellow);
+    }
+    
+    .song-details {
+      flex: 1;
+    }
+    
+    .song-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--tulip-yellow);
+      margin-bottom: 4px;
+    }
+    
+    .song-artist {
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 3px;
+      margin: 15px 0;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #ff69b4, #32CD32, #ffd700);
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.1s linear;
+      position: relative;
+    }
+    
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      right: -6px;
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 5px rgba(255,215,0,0.8);
+    }
+    
+    .time-display {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 15px;
+    }
+    
+    .player-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .control-btn {
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,215,0,0.3);
+      color: var(--text-light);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 16px;
+    }
+    
+    .control-btn:hover {
+      background: rgba(255,215,0,0.3);
+      transform: scale(1.1);
+    }
+    
+    .play-btn {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(145deg, #ff69b4, #32CD32);
+      font-size: 20px;
+    }
+    
+    .volume-container {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+      gap: 10px;
+    }
+    
+    .volume-icon {
+      font-size: 16px;
+      color: rgba(255,255,255,0.7);
+    }
+    
+    .volume-slider {
+      flex: 1;
+      height: 4px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .volume-level {
+      height: 100%;
+      background: linear-gradient(90deg, #ff69b4, #32CD32);
+      border-radius: 2px;
+      width: 80%;
+    }
+    
+    .audio-tab {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(145deg, #ff69b4, #32CD32);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      transition: var(--transition);
+      border: 2px solid rgba(255,215,0,0.8);
+    }
+    
+    .audio-tab:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    
+    .audio-tab-icon {
+      font-size: 24px;
+      color: white;
+    }
+    
+    .audio-tab.hidden {
+      display: none;
+    }
+    
+    @keyframes messageAppear {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    
+    @media (max-width: 480px) {
+      .screen {
+        padding: 12px;
+        padding-top: 70px;
+        padding-bottom: 80px;
+      }
+      
+      .tulip-garden {
+        height: 300px;
+      }
+      
+      .memory-item {
+        padding: 15px;
+        width: calc(100% - 45px);
+        left: 45px !important;
+      }
+      
+      .meaning-card {
+        padding: 18px;
+      }
+      
+      .message-selector {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .message-button {
+        width: 100%;
+        max-width: 220px;
+      }
+      
+      .growth-stages {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      
+      .nav-menu {
+        width: 85vw;
+        left: -85vw;
+      }
+      
+      .bulb-content, .final-content {
+        padding: 20px;
+      }
+      
+      .garden-controls {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .audio-player {
+        width: 90vw;
+        right: 5vw;
+        bottom: 10px;
+      }
+      
+      .audio-toggle {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+        top: -10px;
+        right: -10px;
+      }
+      
+      .audio-tab {
+        width: 50px;
+        height: 50px;
+        bottom: 15px;
+        right: 15px;
+      }
+      
+      .audio-tab-icon {
+        font-size: 20px;
+      }
+      
+      .toggle-controls-button {
+        width: 35px;
+        height: 35px;
+        bottom: 75px;
+        right: 15px;
+      }
+      
+      .toggle-controls-icon {
+        font-size: 1rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .screen {
+        padding: 15px;
+        padding-top: 80px;
+        padding-bottom: 90px;
+        justify-content: flex-start;
+      }
+      
+      .memory-timeline::before {
+        left: 25px;
+      }
+      
+      .memory-item {
+        width: calc(100% - 55px);
+        left: 55px !important;
+        margin-bottom: 30px;
+      }
+      
+      .memory-item::before {
+        left: -45px !important;
+      }
+      
+      .growth-stages {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .tulip-garden {
+        height: 350px;
+      }
+      
+      .message-selector {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .message-button {
+        width: 100%;
+        max-width: 240px;
+      }
+      
+      .garden-title {
+        top: 15px;
+        font-size: clamp(1.6rem, 5vw, 3rem);
+      }
+      
+      .nav-toggle {
+        top: 15px;
+        left: 15px;
+        width: 50px;
+        height: 50px;
+      }
+      
+      .nav-toggle-icon {
+        font-size: 1.4rem;
+      }
+      
+      .nav-menu {
+        width: 280px;
+        left: -280px;
+      }
+      
+      .meaning-content {
+        text-align: left;
+        font-size: 1rem;
+      }
+      
+      .audio-player {
+        width: 90vw;
+        right: 5vw;
+        bottom: 10px;
+      }
+      
+      .audio-tab {
+        width: 55px;
+        height: 55px;
+        bottom: 15px;
+        right: 15px;
+      }
+      
+      .toggle-controls-button {
+        width: 40px;
+        height: 40px;
+        bottom: 80px;
+        right: 15px;
+      }
+    }
+    
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .growth-stages {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+      }
+      
+      .memory-item {
+        width: 44%;
+      }
+      
+      .memory-item:nth-child(even) {
+        left: 56%;
+      }
+      
+      .tulip-garden {
+        height: 380px;
+      }
+    }
+    
+    @media (min-width: 1025px) and (max-width: 1200px) {
+      .growth-stages {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    @media (min-width: 1201px) {
+      .growth-stages {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+      }
+    }
+    
+    @media (max-height: 500px) and (orientation: landscape) {
+      .screen {
+        padding-top: 80px;
+        padding-bottom: 70px;
+        min-height: 100vh;
+      }
+      
+      .welcome-title {
+        font-size: clamp(2rem, 6vh, 3rem);
+        margin-bottom: 15px;
+      }
+      
+      .subtitle {
+        font-size: clamp(1rem, 3vh, 1.5rem);
+        margin-bottom: 20px;
+      }
+      
+      .start-button {
+        padding: 10px 30px;
+        font-size: 1.1rem;
+      }
+      
+      .tulip-garden {
+        height: 250px;
+      }
+    }
+    
+    .magic-text {
+      background: linear-gradient(45deg, #ff69b4, #32CD32, #ffd700, #20b2aa, #9370db);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200% 200%;
+      animation: gradientText 5s ease infinite;
+    }
+    
+    @keyframes gradientText {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    
+    body.fullscreen {
+      overflow: auto;
+    }
+    
+    body.fullscreen .screen {
+      min-height: 100vh;
+      overflow-y: auto;
+    }
+    
+    body.fullscreen .garden-real-screen {
+      height: 100vh;
+      overflow: hidden;
+    }
+    
+    body.fullscreen .garden-canvas-container {
+      height: 100vh;
+    }
+    
+    body.fullscreen .garden-canvas {
+      height: 100vh;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="garden-background"></div>
+
+  <div class="garden-particles"></div>
+
+  <div class="audio-tab" id="audioTab">
+    <div class="audio-tab-icon">🎵</div>
+  </div>
+
+  <div class="audio-player minimized" id="audioPlayer">
+    <div class="audio-toggle" id="audioToggle">−</div>
+    <div class="player-content">
+      <div class="song-info">
+        <div class="song-icon">🎵</div>
+        <div class="song-details">
+          <div class="song-title">Tulipanes en Flor</div>
+          <div class="song-artist">Melodía Especial</div>
+        </div>
+      </div>
+      
+      <div class="progress-container" id="progressContainer">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      
+      <div class="time-display">
+        <span id="currentTime">0:00</span>
+        <span id="duration">0:00</span>
+      </div>
+      
+      <div class="player-controls">
+        <button class="control-btn" id="rewindBtn">⏪</button>
+        <button class="control-btn play-btn" id="playPauseBtn">▶️</button>
+        <button class="control-btn" id="forwardBtn">⏩</button>
+      </div>
+      
+      <div class="volume-container">
+        <div class="volume-icon">🔊</div>
+        <div class="volume-slider" id="volumeSlider">
+          <div class="volume-level" id="volumeLevel"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-toggle" id="navToggle">
+    <div class="nav-toggle-icon">☰</div>
+  </div>
+  
+  <div class="nav-menu" id="navMenu">
+    <button class="nav-menu-item" onclick="goHome()">🏠 Inicio</button>
+    <button class="nav-menu-item" onclick="previousScreen()">← Anterior</button>
+    <button class="nav-menu-item" onclick="nextScreen()">→ Siguiente</button>
+    <button class="nav-menu-item" onclick="showGardenReal()">🌷 Jardín Mágico</button>
+    <button class="nav-menu-item" id="fullscreenMenuItem" onclick="toggleFullscreen()">⛶ Pantalla Completa</button>
+  </div>
+  
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div id="welcomeScreen" class="screen active">
+    <h1 class="welcome-title">🌷 Para Wilmagy 🌷</h1>
+    <p class="subtitle">Un jardín de tulipanes que florece con cada momento especial</p>
+    <button class="start-button" onclick="showBulb()">
+      🌱 Comenzar el Crecimiento 🌱
+    </button>
+  </div>
+
+  <div id="bulbScreen" class="screen">
+    <div class="soil-background"></div>
+    <div class="bulb-content">
+      <h1 class="bulb-title">🌱 Los Bulbos de Nuestro Jardín</h1>
+      <div class="bulb-poem">
+        En la tierra fértil de nuestros días,<br>
+        planté bulbos de esperanza y alegrías.<br>
+        Cada uno guardaba un secreto profundo,<br>
+        una promesa de belleza para el mundo.<br><br>
+        
+        Como el tulipán que duerme en la tierra,<br>
+        nuestra amistad crecía, sin prisa ni guerra.<br>
+        En la oscuridad, raíces se extendían,<br>
+        preparando el milagro que pronto vendría.<br><br>
+        
+        Con paciencia y cuidado, día tras día,<br>
+        regué con cariño esta simiente mía.<br>
+        Y en el silencio de la tierra oscura,<br>
+        germinaba una conexión fuerte y pura.
+      </div>
+      <button class="next-button" onclick="showGrowth()">
+        🌿 Ver el Crecimiento 🌿
+      </button>
+    </div>
+  </div>
+
+  <div id="growthScreen" class="screen">
+    <h1 class="growth-title">🌿 Etapas de Crecimiento</h1>
+    
+    <div class="growth-stages">
+      <div class="growth-stage">
+        <div class="growth-icon">🌱</div>
+        <div class="growth-stage-title">Germinación</div>
+        <div class="growth-description">
+          Como la primera semilla que brota en primavera, nuestros primeros momentos 
+          fueron el inicio de algo hermoso que crecería con el tiempo.
+        </div>
+      </div>
+      
+      <div class="growth-stage">
+        <div class="growth-icon">🌿</div>
+        <div class="growth-stage-title">Desarrollo</div>
+        <div class="growth-description">
+          Cada conversación, cada risa compartida, fue como un nutriente que 
+          fortalecía nuestros lazos y hacía crecer nuestra conexión.
+        </div>
+      </div>
+      
+      <div class="growth-stage">
+        <div class="growth-icon">🌷</div>
+        <div class="growth-stage-title">Florecimiento</div>
+        <div class="growth-description">
+          El momento en que nuestros tulipanes comenzaron a mostrar sus colores, 
+          revelando la belleza única de nuestra amistad especial.
+        </div>
+      </div>
+      
+      <div class="growth-stage">
+        <div class="growth-icon">💖</div>
+        <div class="growth-stage-title">Conexión</div>
+        <div class="growth-description">
+          Como los tulipanes que se inclinan uno hacia el otro, 
+          nuestras almas encontraron armonía en la danza de la vida.
+        </div>
+      </div>
+      
+      <div class="growth-stage">
+        <div class="growth-icon">✨</div>
+        <div class="growth-stage-title">Brillo</div>
+        <div class="growth-description">
+          La luz que emanas ilumina cada pétalo de nuestro jardín, 
+          haciendo que cada tulipán brille con intensidad y belleza.
+        </div>
+      </div>
+      
+      <div class="growth-stage">
+        <div class="growth-icon">🌼</div>
+        <div class="growth-stage-title">Renovación</div>
+        <div class="growth-description">
+          Como los tulipanes que regresan cada primavera, 
+          nuestra conexión se renueva y fortalece con cada nuevo día.
+        </div>
+      </div>
+    </div>
+    
+    <button class="next-button" onclick="showBloom()">
+      🌸 Ver la Floración 🌸
+    </button>
+  </div>
+
+  <div id="bloomScreen" class="screen">
+    <h1 class="bloom-title">🌸 El Jardín en Flor 🌸</h1>
+    
+    <div class="tulip-garden-container">
+      <div class="tulip-garden" id="tulipGarden">
+        <!-- Los tulipanes se generarán dinámicamente con JavaScript -->
+      </div>
+      <div class="garden-sparkles">
+        <div class="garden-sparkle" style="animation-delay: 0s;">✨</div>
+        <div class="garden-sparkle" style="animation-delay: 1s;">🌟</div>
+        <div class="garden-sparkle" style="animation-delay: 2s;">💫</div>
+        <div class="garden-sparkle" style="animation-delay: 3s;">⭐</div>
+        <div class="garden-sparkle" style="animation-delay: 4s;">🌠</div>
+        <div class="garden-sparkle" style="animation-delay: 5s;">✨</div>
+      </div>
+    </div>
+    
+    <div class="garden-description">
+      <p>
+        Cada tulipán en este jardín representa un momento especial, una risa compartida, 
+        una conversación profunda. Juntos forman un paisaje de belleza y conexión que 
+        sigue creciendo y floreciendo con el tiempo.
+      </p>
+    </div>
+    
+    <button class="next-button" onclick="showMeanings()">
+      📖 Significados Especiales 📖
+    </button>
+  </div>
+
+  <div id="meaningsScreen" class="screen">
+    <div class="meanings-container">
+      <h1 class="meanings-title">📜 Los Tulipanes y Sus Significados 📜</h1>
+      
+      <div class="meaning-card">
+        <div class="meaning-title">💝 Tulipán Rojo - Amor Verdadero</div>
+        <div class="meaning-content">El tulipán rojo simboliza un amor profundo y apasionado. Como los pétalos rojos que se abren al sol, mi admiración por ti crece cada día con intensidad y sinceridad. Eres esa persona especial que ilumina mi mundo con tu presencia.</div>
+      </div>
+      
+      <div class="meaning-card poem-card">
+        <div class="meaning-title">🌼 Tulipán Amarillo - Alegría Radiante</div>
+        <div class="meaning-content">El tulipán amarillo representa la alegría y la luz del sol. Tu risa es como un rayo de sol en un día nublado, capaz de iluminar cualquier oscuridad. Cada momento a tu lado se llena de luz y felicidad genuina.</div>
+      </div>
+      
+      <div class="meaning-card">
+        <div class="meaning-title">🌷 Tulipán Rosa - Cariño y Afecto</div>
+        <div class="meaning-content">El tulipán rosa simboliza el cariño y el afecto sincero. Como los delicados pétalos rosados, nuestra conexión es suave pero fuerte, llena de ternura y comprensión mutua. Eres ese amigo especial que valoro profundamente.</div>
+      </div>
+      
+      <button class="next-button" onclick="showMemories()">
+        🕰️ Nuestro Jardín en el Tiempo 🕰️
+      </button>
+    </div>
+  </div>
+
+  <div id="memoriesScreen" class="screen">
+    <div class="memories-container">
+      <h1 class="memories-title">🕰️ Nuestro Jardín en el Tiempo</h1>
+      
+      <div class="memory-timeline">
+        <div class="memory-item">
+          <div class="memory-date">Primera Semilla</div>
+          <div class="memory-content">El momento en que plantamos la primera semilla de nuestra amistad, sin saber que crecería hasta convertirse en este hermoso jardín de tulipanes.</div>
+        </div>
+        
+        <div class="memory-item">
+          <div class="memory-date">Primeros Brotes</div>
+          <div class="memory-content">Cuando comenzamos a conocernos realmente y aparecieron los primeros brotes de confianza y complicidad entre nosotros.</div>
+        </div>
+        
+        <div class="memory-item">
+          <div class="memory-date">Crecimiento</div>
+          <div class="memory-content">Cada conversación, cada risa compartida, fue como un nutriente que fortalecía nuestros lazos y hacía crecer nuestra conexión.</div>
+        </div>
+        
+        <div class="memory-item">
+          <div class="memory-date">Floración</div>
+          <div class="memory-content">El momento en que nuestros tulipanes comenzaron a mostrar sus colores, revelando la belleza única de nuestra amistad especial.</div>
+        </div>
+      </div>
+      
+      <button class="next-button" onclick="showMessages()">
+        💌 Mensajes entre Pétalos 💌
+      </button>
+    </div>
+  </div>
+
+  <div id="messagesScreen" class="screen">
+    <h1 class="messages-title">💌 Mensajes entre Pétalos 💌</h1>
+    
+    <div class="message-selector">
+      <button class="message-button" onclick="showMessage(0, this)">❤️ Amor</button>
+      <button class="message-button" onclick="showMessage(1, this)">😊 Alegría</button>
+      <button class="message-button" onclick="showMessage(2, this)">🤗 Amistad</button>
+      <button class="message-button" onclick="showMessage(3, this)">✨ Admiración</button>
+      <button class="message-button" onclick="showMessage(4, this)">🌷 Gratitud</button>
+    </div>
+    
+    <div class="message-display" id="messageDisplay">
+      <div style="font-size: 2.5rem; margin-bottom: 20px;">🌷</div>
+      <p>Selecciona un mensaje para descubrir algo especial...</p>
+    </div>
+    
+    <button class="next-button" onclick="showFinal()">
+      🎉 Nuestro Jardín Eterno 🎉
+    </button>
+  </div>
+
+  <div id="finalScreen" class="screen">
+    <div class="final-content">
+      <h1 class="final-title">✨ Nuestro Jardín Eterno ✨</h1>
+      
+      <p class="final-text">
+        Como los tulipanes que regresan cada primavera con renovada belleza, 
+        nuestra conexión seguirá floreciendo a través del tiempo. 
+        Cada estación traerá nuevos colores, nuevos matices, pero la esencia permanecerá.
+      </p>
+      
+      <p class="final-highlight">
+        <strong>Eres el jardín más hermoso que he tenido el privilegio de cultivar.</strong>
+      </p>
+      
+      <p class="final-text">
+        Que este jardín digital sea un recordatorio de lo especial que eres, 
+        de la belleza que aportas al mundo y del cariño sincero que siento por ti. 
+        Como los tulipanes que se inclinan hacia la luz, yo me inclino hacia tu esencia luminosa.
+      </p>
+      
+      <div class="final-signature">
+        Con todo mi cariño 💖<br>
+        <span style="color: #ff69b4;">Para Wilmagy, mi tulipán más especial</span>
+      </div>
+    </div>
+    
+    <button class="next-button" onclick="showGardenReal()">
+      🌷 Explorar el Jardín Mágico 🌷
+    </button>
+  </div>
+
+  <div id="gardenRealScreen" class="screen garden-real-screen">
+    <div class="garden-canvas-container">
+      <canvas id="gardenCanvas" class="garden-canvas"></canvas>
+    </div>
+    
+    <h1 class="garden-title">🌷 Nuestro Jardín de Tulipanes 🌷</h1>
+    
+    <div class="toggle-controls-button" id="toggleControlsButton">
+      <div class="toggle-controls-icon">▼</div>
+    </div>
+    
+    <div class="garden-controls" id="gardenControls">
+      <button class="garden-control-button" onclick="toggleBloom()">🌷 Florecer/Reposar</button>
+      <button class="garden-control-button" onclick="addTulip()">➕ Añadir Tulipán</button>
+      <button class="garden-control-button" onclick="resetGarden()">🔄 Reiniciar Jardín</button>
+    </div>
+  </div>
+
+  <audio id="clickSound" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+  </audio>
+  
+  <audio id="bloomSound" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkle-sound-3091.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="mainAudio" preload="metadata">
+    <!-- Puedes reemplazar esta URL con tu propia música -->
+    <source src="https://assets.mixkit.co/music/preview/mixkit-garden-389.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const screens = [
+      'welcomeScreen', 'bulbScreen', 'growthScreen', 
+      'bloomScreen', 'meaningsScreen', 'memoriesScreen', 
+      'messagesScreen', 'finalScreen', 'gardenRealScreen'
+    ];
+    let currentScreen = 0;
+    const clickSound = document.getElementById('clickSound');
+    const bloomSound = document.getElementById('bloomSound');
+    
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    const navOverlay = document.getElementById('navOverlay');
+    
+    navToggle.addEventListener('click', toggleNav);
+    navOverlay.addEventListener('click', toggleNav);
+    
+    function toggleNav() {
+      navMenu.classList.toggle('active');
+      navOverlay.classList.toggle('active');
+      
+      const icon = navToggle.querySelector('.nav-toggle-icon');
+      if (navMenu.classList.contains('active')) {
+        icon.textContent = '✕';
+      } else {
+        icon.textContent = '☰';
+      }
+    }
+    
+    function createGardenParticles() {
+      const container = document.querySelector('.garden-particles');
+      setInterval(() => {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        const particles = ['✨', '🌟', '💫', '⭐', '🌠', '🌷', '🌸'];
+        particle.textContent = particles[Math.floor(Math.random() * particles.length)];
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        particle.style.fontSize = (Math.random() * 8 + 8) + 'px';
+        container.appendChild(particle);
+        setTimeout(() => particle.remove(), 6000);
+      }, 300);
+    }
+    
+    createGardenParticles();
+    
+    function createSoilParticles() {
+      const soilContainer = document.querySelector('.soil-background');
+      if (soilContainer) {
+        soilContainer.innerHTML = '';
+        for (let i = 0; i < 50; i++) {
+          const particle = document.createElement('div');
+          particle.classList.add('soil-particle');
+          particle.style.left = Math.random() * 100 + '%';
+          particle.style.top = Math.random() * 100 + '%';
+          particle.style.animationDelay = Math.random() * 4 + 's';
+          particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+          soilContainer.appendChild(particle);
+        }
+      }
+    }
+    
+    const audioPlayer = document.getElementById('audioPlayer');
+    const audioToggle = document.getElementById('audioToggle');
+    const audioTab = document.getElementById('audioTab');
+    const mainAudio = document.getElementById('mainAudio');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const rewindBtn = document.getElementById('rewindBtn');
+    const forwardBtn = document.getElementById('forwardBtn');
+    const progressBar = document.getElementById('progressBar');
+    const progressContainer = document.getElementById('progressContainer');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationEl = document.getElementById('duration');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const volumeLevel = document.getElementById('volumeLevel');
+    
+    audioPlayer.classList.add('minimized');
+    audioToggle.textContent = '+';
+    
+    audioToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      audioPlayer.classList.toggle('minimized');
+      audioToggle.textContent = audioPlayer.classList.contains('minimized') ? '+' : '−';
+      
+      if (audioPlayer.classList.contains('minimized')) {
+        audioTab.classList.remove('hidden');
+      } else {
+        audioTab.classList.add('hidden');
+      }
+    });
+    
+    audioTab.addEventListener('click', function() {
+      audioPlayer.classList.remove('minimized');
+      audioToggle.textContent = '−';
+      audioTab.classList.add('hidden');
+    });
+    
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+    
+    function updateProgress() {
+      const { duration, currentTime } = mainAudio;
+      const progressPercent = (currentTime / duration) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+      currentTimeEl.textContent = formatTime(currentTime);
+    }
+    
+    function setProgress(e) {
+      const width = this.clientWidth;
+      const clickX = e.offsetX;
+      const duration = mainAudio.duration;
+      
+      mainAudio.currentTime = (clickX / width) * duration;
+    }
+    
+    function setVolume(e) {
+      const width = this.clientWidth;
+      const clickX = e.offsetX;
+      const volume = clickX / width;
+      
+      mainAudio.volume = volume;
+      volumeLevel.style.width = `${volume * 100}%`;
+    }
+    
+    function togglePlayPause() {
+      if (mainAudio.paused) {
+        mainAudio.play();
+        playPauseBtn.textContent = '⏸️';
+      } else {
+        mainAudio.pause();
+        playPauseBtn.textContent = '▶️';
+      }
+    }
+    
+    function rewind() {
+      mainAudio.currentTime = Math.max(0, mainAudio.currentTime - 10);
+    }
+    
+    function forward() {
+      mainAudio.currentTime = Math.min(mainAudio.duration, mainAudio.currentTime + 10);
+    }
+    
+    mainAudio.addEventListener('loadedmetadata', () => {
+      durationEl.textContent = formatTime(mainAudio.duration);
+    });
+    
+    mainAudio.addEventListener('timeupdate', updateProgress);
+    mainAudio.addEventListener('ended', () => {
+      playPauseBtn.textContent = '▶️';
+      progressBar.style.width = '0%';
+    });
+    
+    playPauseBtn.addEventListener('click', togglePlayPause);
+    rewindBtn.addEventListener('click', rewind);
+    forwardBtn.addEventListener('click', forward);
+    progressContainer.addEventListener('click', setProgress);
+    volumeSlider.addEventListener('click', setVolume);
+    
+    mainAudio.volume = 0.8;
+    volumeLevel.style.width = '80%';
+    
+    function playSound(sound) {
+      sound.currentTime = 0;
+      sound.play().catch(e => console.log("Error reproduciendo sonido: ", e));
+    }
+    
+    function showScreen(screenId) {
+      playSound(clickSound);
+      
+      if (navMenu.classList.contains('active')) {
+        toggleNav();
+      }
+      
+      document.querySelectorAll('.screen').forEach(s => {
+        s.classList.remove('active');
+      });
+      
+      setTimeout(() => {
+        document.getElementById(screenId).classList.add('active');
+        currentScreen = screens.indexOf(screenId);
+        
+        if (screenId === 'bulbScreen') {
+          setTimeout(createSoilParticles, 100);
+        }
+        
+        if (screenId === 'bloomScreen') {
+          createTulipGarden();
+          playSound(bloomSound);
+        }
+        
+        if (screenId === 'gardenRealScreen') {
+          initGarden();
+        }
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 300);
+    }
+    
+    function showBulb() {
+      showScreen('bulbScreen');
+    }
+    
+    function showGrowth() {
+      showScreen('growthScreen');
+    }
+    
+    function showBloom() {
+      showScreen('bloomScreen');
+    }
+    
+    function showMeanings() {
+      showScreen('meaningsScreen');
+    }
+    
+    function showMemories() {
+      showScreen('memoriesScreen');
+    }
+    
+    function showMessages() {
+      showScreen('messagesScreen');
+    }
+    
+    function showFinal() {
+      showScreen('finalScreen');
+    }
+    
+    function showGardenReal() {
+      showScreen('gardenRealScreen');
+    }
+    
+    function nextScreen() {
+      if (currentScreen < screens.length - 1) {
+        currentScreen++;
+        showScreen(screens[currentScreen]);
+      }
+    }
+    
+    function previousScreen() {
+      if (currentScreen > 0) {
+        currentScreen--;
+        showScreen(screens[currentScreen]);
+      }
+    }
+    
+    function goHome() {
+      showScreen('welcomeScreen');
+      currentScreen = 0;
+    }
+    
+    const messages = [
+      {
+        icon: "❤️",
+        title: "Amor y Admiración",
+        content: "Como el tulipán rojo que simboliza el amor verdadero, mi admiración por ti crece cada día. Eres una persona extraordinaria que ilumina el mundo con tu presencia."
+      },
+      {
+        icon: "😊",
+        title: "Alegría y Luz",
+        content: "Tu risa es como un campo de tulipanes amarillos bajo el sol de primavera. Llena de luz, calidez y una alegría contagiosa que hace que cada día sea más brillante."
+      },
+      {
+        icon: "🤗",
+        title: "Amistad Sincera",
+        content: "Nuestra amistad es como un jardín de tulipanes rosados: delicada pero fuerte, llena de cariño y comprensión mutua. Valoro cada momento que compartimos."
+      },
+      {
+        icon: "✨",
+        title: "Admiración Profunda",
+        content: "Admiro tu fuerza, tu sensibilidad y tu capacidad para ver belleza donde otros solo ven ordinario. Eres como el tulipán más raro y especial del jardín."
+      },
+      {
+        icon: "🌷",
+        title: "Gratitud Eterna",
+        content: "Estoy agradecido por cada conversación, cada risa compartida, cada momento de complicidad. Eres un regalo en mi vida que atesoro profundamente."
+      }
+    ];
+    
+    function showMessage(index, button) {
+      playSound(clickSound);
+      document.querySelectorAll('.message-button').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      
+      const message = messages[index];
+      const display = document.getElementById('messageDisplay');
+      
+      display.style.opacity = 0;
+      
+      setTimeout(() => {
+        display.innerHTML = `
+          <div style="font-size: 3rem; margin-bottom: 20px; animation: messageAppear 0.5s ease-out;">${message.icon}</div>
+          <h3 style="font-size: 1.8rem; color: #ffd700; margin-bottom: 20px; animation: messageAppear 0.5s ease-out 0.2s both;">${message.title}</h3>
+          <p style="font-size: 1.3rem; line-height: 1.6; animation: messageAppear 0.5s ease-out 0.4s both;">${message.content}</p>
+        `;
+        
+        display.style.opacity = 1;
+      }, 300);
+    }
+    
+    function createTulipGarden() {
+      const garden = document.getElementById('tulipGarden');
+      garden.innerHTML = '';
+      
+      const tulipColors = ['#FF6B6B', '#FFB6C1', '#FFD700', '#9370DB', '#F5F5F5'];
+      const tulipNames = ['Amor', 'Alegría', 'Esperanza', 'Amistad', 'Pureza'];
+      
+      for (let i = 0; i < 12; i++) {
+        const tulip = document.createElement('div');
+        tulip.classList.add('tulip');
+        tulip.style.left = `${10 + (i % 4) * 25}%`;
+        tulip.style.bottom = `${10 + Math.floor(i / 4) * 30}%`;
+        
+        const colorIndex = i % tulipColors.length;
+        const stemHeight = 120 + Math.random() * 80;
+        
+        tulip.innerHTML = `
+          <div class="tulip-stem" style="height: ${stemHeight}px; --tulip-color: ${tulipColors[colorIndex]}"></div>
+          <div class="tulip-bud" style="height: 60px; --tulip-color: ${tulipColors[colorIndex]}"></div>
+        `;
+        
+        garden.appendChild(tulip);
+        
+        // Animar el crecimiento
+        setTimeout(() => {
+          tulip.querySelector('.tulip-stem').style.height = `${stemHeight}px`;
+          tulip.querySelector('.tulip-bud').style.height = '60px';
+          
+          // Agregar pétalos después de que crezca el tallo
+          setTimeout(() => {
+            const bud = tulip.querySelector('.tulip-bud');
+            bud.style.borderRadius = '50% 50% 40% 40%';
+            bud.style.height = '50px';
+            bud.style.width = '50px';
+            
+            // Agregar hojas
+            const leaf1 = document.createElement('div');
+            leaf1.classList.add('tulip-leaf');
+            leaf1.style.left = '50%';
+            leaf1.style.bottom = '40%';
+            leaf1.style.transform = 'rotate(45deg)';
+            tulip.appendChild(leaf1);
+            
+            const leaf2 = document.createElement('div');
+            leaf2.classList.add('tulip-leaf');
+            leaf2.style.left = '50%';
+            leaf2.style.bottom = '60%';
+            leaf2.style.transform = 'rotate(-45deg)';
+            tulip.appendChild(leaf2);
+          }, 500);
+        }, i * 200);
+      }
+    }
+    
+    document.querySelectorAll('.growth-stage').forEach(stage => {
+      stage.addEventListener('click', () => {
+        playSound(clickSound);
+        stage.style.transform = 'translateY(-5px) scale(1.02)';
+        setTimeout(() => {
+          stage.style.transform = '';
+        }, 300);
+      });
+    });
+    
+    const tulipGarden = document.querySelector('.tulip-garden');
+    if (tulipGarden) {
+      tulipGarden.addEventListener('click', () => {
+        playSound(bloomSound);
+        tulipGarden.style.boxShadow = '0 0 40px rgba(50,205,50,0.8)';
+        
+        setTimeout(() => {
+          tulipGarden.style.boxShadow = '0 0 30px rgba(50,205,50,0.5)';
+        }, 1000);
+      });
+    }
+    
+    document.querySelectorAll('.memory-item').forEach(item => {
+      item.addEventListener('click', () => {
+        playSound(clickSound);
+        item.style.transform = 'translateY(-5px) scale(1.02)';
+        setTimeout(() => {
+          item.style.transform = '';
+        }, 300);
+      });
+    });
+    
+    document.querySelectorAll('.meaning-card').forEach(card => {
+      card.addEventListener('click', () => {
+        playSound(clickSound);
+        card.style.transform = 'translateY(-3px) scale(1.01)';
+        setTimeout(() => {
+          card.style.transform = '';
+        }, 300);
+      });
+    });
+    
+    let gardenAnimationId = null;
+    let gardenTulips = [];
+    let isBlooming = true;
+    
+    const toggleControlsButton = document.getElementById('toggleControlsButton');
+    const gardenControls = document.getElementById('gardenControls');
+    
+    toggleControlsButton.addEventListener('click', function() {
+      gardenControls.classList.toggle('hidden');
+      toggleControlsButton.classList.toggle('hidden');
+    });
+    
+    function initGarden() {
+      if (gardenAnimationId) {
+        cancelAnimationFrame(gardenAnimationId);
+        gardenAnimationId = null;
+      }
+      
+      const canvas = document.getElementById('gardenCanvas');
+      const ctx = canvas.getContext('2d');
+      
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+      
+      createInteractiveGarden(canvas, ctx);
+      animateGarden(canvas, ctx);
+    }
+    
+    function createInteractiveGarden(canvas, ctx) {
+      gardenTulips = [];
+      
+      const tulipColors = [
+        { main: '#FF6B6B', accent: '#FF8E8E', stem: '#32CD32' }, // Rojo
+        { main: '#FFB6C1', accent: '#FFC0CB', stem: '#32CD32' }, // Rosa
+        { main: '#FFD700', accent: '#FFE44D', stem: '#32CD32' }, // Amarillo
+        { main: '#9370DB', accent: '#AB8CFF', stem: '#32CD32' }, // Púrpura
+        { main: '#F5F5F5', accent: '#FFFFFF', stem: '#32CD32' }  // Blanco
+      ];
+      
+      // Crear tulipanes iniciales
+      for (let i = 0; i < 15; i++) {
+        const color = tulipColors[Math.floor(Math.random() * tulipColors.length)];
+        gardenTulips.push({
+          x: Math.random() * canvas.width,
+          y: canvas.height - 50 - Math.random() * 100,
+          stemHeight: 100 + Math.random() * 80,
+          stemWidth: 5 + Math.random() * 3,
+          bloomSize: 30 + Math.random() * 20,
+          color: color,
+          bloomProgress: Math.random(),
+          sway: Math.random() * Math.PI * 2,
+          swaySpeed: 0.02 + Math.random() * 0.03,
+          growthSpeed: 0.005 + Math.random() * 0.01,
+          isGrowing: true,
+          petals: []
+        });
+        
+        // Inicializar pétalos
+        for (let j = 0; j < 6; j++) {
+          gardenTulips[i].petals.push({
+            angle: (j / 6) * Math.PI * 2,
+            size: 0.8 + Math.random() * 0.4,
+            curve: 0.5 + Math.random() * 0.5
+          });
+        }
+      }
+    }
+    
+    function animateGarden(canvas, ctx) {
+      ctx.fillStyle = 'rgba(10, 61, 10, 0.3)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Dibujar suelo
+      const soilGradient = ctx.createLinearGradient(0, canvas.height - 50, 0, canvas.height);
+      soilGradient.addColorStop(0, '#8B4513');
+      soilGradient.addColorStop(1, '#5D4037');
+      
+      ctx.fillStyle = soilGradient;
+      ctx.fillRect(0, canvas.height - 50, canvas.width, 50);
+      
+      // Dibujar hierba
+      ctx.fillStyle = '#2E7D32';
+      for (let i = 0; i < 100; i++) {
+        const x = Math.random() * canvas.width;
+        const height = 5 + Math.random() * 15;
+        ctx.fillRect(x, canvas.height - 50, 2, -height);
+      }
+      
+      // Actualizar y dibujar tulipanes
+      gardenTulips.forEach(tulip => {
+        // Actualizar balanceo
+        tulip.sway += tulip.swaySpeed;
+        
+        // Actualizar crecimiento/florecimiento
+        if (tulip.isGrowing && tulip.bloomProgress < 1) {
+          tulip.bloomProgress += tulip.growthSpeed;
+        } else if (!tulip.isGrowing && tulip.bloomProgress > 0) {
+          tulip.bloomProgress -= tulip.growthSpeed;
+        }
+        
+        // Dibujar tallo
+        const swayX = Math.sin(tulip.sway) * 5;
+        ctx.strokeStyle = tulip.color.stem;
+        ctx.lineWidth = tulip.stemWidth;
+        ctx.beginPath();
+        ctx.moveTo(tulip.x, tulip.y);
+        ctx.lineTo(tulip.x + swayX, tulip.y - tulip.stemHeight * tulip.bloomProgress);
+        ctx.stroke();
+        
+        // Dibujar hojas
+        if (tulip.bloomProgress > 0.3) {
+          const leafY = tulip.y - tulip.stemHeight * tulip.bloomProgress * 0.6;
+          ctx.fillStyle = '#32CD32';
+          ctx.beginPath();
+          ctx.ellipse(
+            tulip.x + swayX * 0.5, 
+            leafY, 
+            15, 
+            8, 
+            Math.PI/4 + swayX * 0.1, 
+            0, 
+            Math.PI * 2
+          );
+          ctx.fill();
+          
+          ctx.beginPath();
+          ctx.ellipse(
+            tulip.x + swayX * 0.5, 
+            leafY - 20, 
+            12, 
+            6, 
+            -Math.PI/4 + swayX * 0.1, 
+            0, 
+            Math.PI * 2
+          );
+          ctx.fill();
+        }
+        
+        // Dibujar flor
+        if (tulip.bloomProgress > 0.5) {
+          const flowerY = tulip.y - tulip.stemHeight * tulip.bloomProgress;
+          const currentBloomSize = tulip.bloomSize * (tulip.bloomProgress - 0.5) * 2;
+          
+          // Dibujar pétalos
+          tulip.petals.forEach(petal => {
+            const petalX = tulip.x + swayX + Math.cos(petal.angle) * currentBloomSize * 0.8;
+            const petalY = flowerY + Math.sin(petal.angle) * currentBloomSize * 0.6;
+            
+            ctx.fillStyle = tulip.color.main;
+            ctx.beginPath();
+            ctx.ellipse(
+              petalX, 
+              petalY, 
+              currentBloomSize * petal.size, 
+              currentBloomSize * petal.size * 0.7, 
+              petal.angle, 
+              0, 
+              Math.PI * 2
+            );
+            ctx.fill();
+            
+            // Detalle del pétalo
+            ctx.fillStyle = tulip.color.accent;
+            ctx.beginPath();
+            ctx.ellipse(
+              petalX, 
+              petalY, 
+              currentBloomSize * petal.size * 0.5, 
+              currentBloomSize * petal.size * 0.35, 
+              petal.angle, 
+              0, 
+              Math.PI * 2
+            );
+            ctx.fill();
+          });
+          
+          // Centro de la flor
+          ctx.fillStyle = '#000000';
+          ctx.beginPath();
+          ctx.arc(tulip.x + swayX, flowerY, currentBloomSize * 0.3, 0, Math.PI * 2);
+          ctx.fill();
+          
+          ctx.fillStyle = '#FFD700';
+          ctx.beginPath();
+          ctx.arc(tulip.x + swayX, flowerY, currentBloomSize * 0.15, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+      
+      gardenAnimationId = requestAnimationFrame(() => animateGarden(canvas, ctx));
+    }
+    
+    function toggleBloom() {
+      isBlooming = !isBlooming;
+      gardenTulips.forEach(tulip => {
+        tulip.isGrowing = isBlooming;
+      });
+    }
+    
+    function addTulip() {
+      const canvas = document.getElementById('gardenCanvas');
+      const tulipColors = [
+        { main: '#FF6B6B', accent: '#FF8E8E', stem: '#32CD32' },
+        { main: '#FFB6C1', accent: '#FFC0CB', stem: '#32CD32' },
+        { main: '#FFD700', accent: '#FFE44D', stem: '#32CD32' },
+        { main: '#9370DB', accent: '#AB8CFF', stem: '#32CD32' },
+        { main: '#F5F5F5', accent: '#FFFFFF', stem: '#32CD32' }
+      ];
+      
+      const color = tulipColors[Math.floor(Math.random() * tulipColors.length)];
+      const newTulip = {
+        x: Math.random() * canvas.width,
+        y: canvas.height - 50 - Math.random() * 100,
+        stemHeight: 100 + Math.random() * 80,
+        stemWidth: 5 + Math.random() * 3,
+        bloomSize: 30 + Math.random() * 20,
+        color: color,
+        bloomProgress: 0,
+        sway: Math.random() * Math.PI * 2,
+        swaySpeed: 0.02 + Math.random() * 0.03,
+        growthSpeed: 0.005 + Math.random() * 0.01,
+        isGrowing: true,
+        petals: []
+      };
+      
+      for (let j = 0; j < 6; j++) {
+        newTulip.petals.push({
+          angle: (j / 6) * Math.PI * 2,
+          size: 0.8 + Math.random() * 0.4,
+          curve: 0.5 + Math.random() * 0.5
+        });
+      }
+      
+      gardenTulips.push(newTulip);
+    }
+    
+    function resetGarden() {
+      const canvas = document.getElementById('gardenCanvas');
+      createInteractiveGarden(canvas, canvas.getContext('2d'));
+    }
+    
+    function stopGardenAnimation() {
+      if (gardenAnimationId) {
+        cancelAnimationFrame(gardenAnimationId);
+        gardenAnimationId = null;
+      }
+    }
+    
+    const originalShowScreen = showScreen;
+    showScreen = function(screenId) {
+      if (currentScreen === screens.indexOf('gardenRealScreen') && screenId !== 'gardenRealScreen') {
+        stopGardenAnimation();
+      }
+      originalShowScreen(screenId);
+    };
+    
+    const fullscreenMenuItem = document.getElementById('fullscreenMenuItem');
+    let isFullscreen = false;
+    
+    function toggleFullscreen() {
+      if (!isFullscreen) {
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+          document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) {
+          document.documentElement.msRequestFullscreen();
+        }
+        document.body.classList.add('fullscreen');
+        fullscreenMenuItem.textContent = '⛶ Salir de Pantalla Completa';
+        isFullscreen = true;
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen();
+        }
+        document.body.classList.remove('fullscreen');
+        fullscreenMenuItem.textContent = '⛶ Pantalla Completa';
+        isFullscreen = false;
+      }
+    }
+    
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('msfullscreenchange', handleFullscreenChange);
+    
+    function handleFullscreenChange() {
+      isFullscreen = !!document.fullscreenElement || 
+                    !!document.webkitFullscreenElement || 
+                    !!document.msFullscreenElement;
+      
+      if (isFullscreen) {
+        document.body.classList.add('fullscreen');
+        fullscreenMenuItem.textContent = '⛶ Salir de Pantalla Completa';
+      } else {
+        document.body.classList.remove('fullscreen');
+        fullscreenMenuItem.textContent = '⛶ Pantalla Completa';
+      }
+    }
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        previousScreen();
+      } else if (e.key === 'ArrowRight') {
+        nextScreen();
+      } else if (e.key === 'Home' || e.key === 'Escape') {
+        goHome();
+      } else if (e.key === 'F11') {
+        e.preventDefault();
+        toggleFullscreen();
+      }
+    });
+  </script>
+</body>
+</html>
