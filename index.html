@@ -272,24 +272,6 @@
       50% { opacity: 1; transform: scale(1.5); }
     }
     
-    .bulb-title {
-      font-size: clamp(2rem, 6vw, 3.5rem);
-      margin-bottom: clamp(25px, 5vw, 40px);
-      text-shadow: 0 0 30px rgba(255,255,255,0.8);
-      animation: bulbPulse 4s ease-in-out infinite;
-      font-family: 'Dancing Script', cursive;
-      position: relative;
-      line-height: 1.2;
-      padding: 0 10px;
-    }
-    
-    @keyframes bulbPulse {
-      0%, 100% { color: #ffffff; }
-      25% { color: #ffd700; }
-      50% { color: #32CD32; }
-      75% { color: #ff69b4; }
-    }
-    
     .bulb-poem {
       background: rgba(139, 69, 19, 0.2);
       backdrop-filter: blur(15px);
@@ -475,106 +457,6 @@
       line-height: 1.6;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
       padding: 0 15px;
-    }
-    
-    .meanings-screen {
-      background: transparent;
-      padding: var(--section-spacing);
-      justify-content: center;
-    }
-    
-    .meanings-container {
-      max-width: 1000px;
-      width: 95%;
-      margin: 0 auto;
-    }
-    
-    .meanings-title {
-      text-align: center;
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      margin-bottom: clamp(30px, 6vw, 50px);
-      color: #ff69b4;
-      font-family: 'Dancing Script', cursive;
-      line-height: 1.2;
-      padding: 0 15px;
-    }
-    
-    .meanings-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(300px, 90vw), 1fr));
-      gap: clamp(20px, 4vw, 30px);
-      max-width: 1200px;
-      width: 95%;
-      margin: 0 auto clamp(30px, 6vw, 50px) auto;
-    }
-    
-    .meaning-card {
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(20px);
-      border-radius: var(--border-radius);
-      padding: clamp(20px, 4vw, 30px);
-      border: 2px solid rgba(50,205,50,0.3);
-      transition: var(--transition);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      min-height: 280px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    }
-    
-    .meaning-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, rgba(50,205,50,0.1) 0%, transparent 70%);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    
-    .meaning-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 15px 35px rgba(50,205,50,0.3);
-      border-color: rgba(50,205,50,0.8);
-    }
-    
-    .meaning-card:hover::before {
-      opacity: 1;
-    }
-    
-    .meaning-icon {
-      font-size: clamp(3rem, 7vw, 4rem);
-      text-align: center;
-      margin-bottom: clamp(15px, 3vw, 20px);
-      animation: meaningPulse 3s ease-in-out infinite;
-    }
-    
-    @keyframes meaningPulse {
-      0%, 100% { transform: scale(1); filter: brightness(1); }
-      50% { transform: scale(1.1); filter: brightness(1.3); }
-    }
-    
-    .meaning-card-title {
-      font-size: clamp(1.3rem, 3.5vw, 1.6rem);
-      color: #32CD32;
-      margin-bottom: clamp(12px, 2.5vw, 15px);
-      text-align: center;
-      font-family: 'Dancing Script', cursive;
-      font-weight: bold;
-    }
-    
-    .meaning-description {
-      font-size: clamp(0.9rem, 2.2vw, 1.1rem);
-      line-height: 1.6;
-      text-align: center;
-      opacity: 0.9;
     }
     
     .final-screen {
@@ -1083,15 +965,6 @@
         height: 300px;
       }
       
-      .meaning-card {
-        padding: 18px;
-      }
-      
-      .meanings-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-      }
-      
       .nav-menu {
         width: 85vw;
         left: -85vw;
@@ -1152,11 +1025,6 @@
         justify-content: flex-start;
       }
       
-      .meanings-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-      
       .tulip-garden {
         height: 350px;
       }
@@ -1200,30 +1068,6 @@
         height: 40px;
         bottom: 80px;
         right: 15px;
-      }
-    }
-    
-    @media (min-width: 769px) and (max-width: 1024px) {
-      .meanings-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 25px;
-      }
-      
-      .tulip-garden {
-        height: 380px;
-      }
-    }
-    
-    @media (min-width: 1025px) and (max-width: 1200px) {
-      .meanings-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-    
-    @media (min-width: 1201px) {
-      .meanings-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
       }
     }
     
@@ -1370,7 +1214,6 @@
   <div id="bulbScreen" class="screen">
     <div class="soil-background"></div>
     <div class="bulb-content">
-      <h1 class="bulb-title">🌱 Los Bulbos de Nuestro Jardín</h1>
       <div class="bulb-poem">
         <h3 style="color: #ffd700; margin-bottom: 20px; font-family: 'Dancing Script', cursive;">Tú y los Tulipanes</h3>
         Llegas con el otoño en la mirada,<br>
@@ -1442,69 +1285,9 @@
       </p>
     </div>
     
-    <button class="next-button" onclick="showMeanings()">
-      📖 Significados Especiales 📖
+    <button class="next-button" onclick="showFinal()">
+      ✨ Nuestro Jardín Eterno ✨
     </button>
-  </div>
-
-  <div id="meaningsScreen" class="screen">
-    <div class="meanings-container">
-      <h1 class="meanings-title">📜 Los Tulipanes y Sus Significados 📜</h1>
-      
-      <div class="meanings-grid">
-        <div class="meaning-card">
-          <div class="meaning-icon">❤️</div>
-          <div class="meaning-card-title">Tulipán Rojo</div>
-          <div class="meaning-description">
-            Amor verdadero y pasión profunda. Como los pétalos rojos que se abren al sol, mi admiración por ti crece cada día con intensidad y sinceridad.
-          </div>
-        </div>
-        
-        <div class="meaning-card">
-          <div class="meaning-icon">😊</div>
-          <div class="meaning-card-title">Tulipán Amarillo</div>
-          <div class="meaning-description">
-            Alegría radiante y luz del sol. Tu risa es como un rayo de sol en un día nublado, capaz de iluminar cualquier oscuridad.
-          </div>
-        </div>
-        
-        <div class="meaning-card">
-          <div class="meaning-icon">🤗</div>
-          <div class="meaning-card-title">Tulipán Rosa</div>
-          <div class="meaning-description">
-            Cariño y afecto sincero. Como los delicados pétalos rosados, nuestra conexión es suave pero fuerte, llena de ternura y comprensión.
-          </div>
-        </div>
-        
-        <div class="meaning-card">
-          <div class="meaning-icon">✨</div>
-          <div class="meaning-card-title">Tulipán Púrpura</div>
-          <div class="meaning-description">
-            Realeza y admiración. Admiro tu fuerza, tu sensibilidad y tu capacidad para ver belleza donde otros solo ven ordinario.
-          </div>
-        </div>
-        
-        <div class="meaning-card">
-          <div class="meaning-icon">🌷</div>
-          <div class="meaning-card-title">Tulipán Blanco</div>
-          <div class="meaning-description">
-            Pureza y nuevos comienzos. Eres como el tulipán más raro y especial del jardín, único en tu esencia y belleza.
-          </div>
-        </div>
-        
-        <div class="meaning-card">
-          <div class="meaning-icon">💖</div>
-          <div class="meaning-card-title">Tulipán Multicolor</div>
-          <div class="meaning-description">
-            Belleza única y complejidad. Eres una obra de arte compuesta de contrastes, especial precisamente por tus matices únicos.
-          </div>
-        </div>
-      </div>
-      
-      <button class="next-button" onclick="showFinal()">
-        ✨ Nuestro Jardín Eterno ✨
-      </button>
-    </div>
   </div>
 
   <div id="finalScreen" class="screen">
@@ -1567,7 +1350,7 @@
   <script>
     const screens = [
       'welcomeScreen', 'bulbScreen', 'bloomScreen', 
-      'meaningsScreen', 'finalScreen', 'gardenRealScreen'
+      'finalScreen', 'gardenRealScreen'
     ];
     let currentScreen = 0;
     const clickSound = document.getElementById('clickSound');
@@ -1772,10 +1555,6 @@
       showScreen('bloomScreen');
     }
     
-    function showMeanings() {
-      showScreen('meaningsScreen');
-    }
-    
     function showFinal() {
       showScreen('finalScreen');
     }
@@ -1808,7 +1587,6 @@
       garden.innerHTML = '';
       
       const tulipColors = ['#FF6B6B', '#FFB6C1', '#FFD700', '#9370DB', '#F5F5F5'];
-      const tulipNames = ['Amor', 'Alegría', 'Esperanza', 'Amistad', 'Pureza'];
       
       for (let i = 0; i < 12; i++) {
         const tulip = document.createElement('div');
@@ -1856,16 +1634,6 @@
         }, i * 200);
       }
     }
-    
-    document.querySelectorAll('.meaning-card').forEach(card => {
-      card.addEventListener('click', () => {
-        playSound(clickSound);
-        card.style.transform = 'translateY(-5px) scale(1.02)';
-        setTimeout(() => {
-          card.style.transform = '';
-        }, 300);
-      });
-    });
     
     const tulipGarden = document.querySelector('.tulip-garden');
     if (tulipGarden) {
@@ -1971,6 +1739,48 @@
       ctx.lineTo(canvas.width, canvas.height * 0.7);
       ctx.fill();
       
+      // Dibujar sol
+      ctx.fillStyle = '#FFD700';
+      ctx.beginPath();
+      ctx.arc(canvas.width - 100, 100, 50, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Dibujar nubes
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+      for (let i = 0; i < 5; i++) {
+        const x = (i * 200) % canvas.width;
+        const y = 80 + Math.sin(i) * 20;
+        ctx.beginPath();
+        ctx.arc(x, y, 30, 0, Math.PI * 2);
+        ctx.arc(x + 25, y - 10, 25, 0, Math.PI * 2);
+        ctx.arc(x + 50, y, 30, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      
+      // Dibujar pájaros
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 2;
+      for (let i = 0; i < 8; i++) {
+        const x = (i * 120) % canvas.width;
+        const y = 150 + Math.sin(i) * 30;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + 10, y - 10);
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + 10, y + 10);
+        ctx.stroke();
+      }
+      
+      // Dibujar arroyo
+      ctx.strokeStyle = '#1E90FF';
+      ctx.lineWidth = 8;
+      ctx.beginPath();
+      ctx.moveTo(0, canvas.height * 0.6);
+      for (let i = 0; i < canvas.width; i += 20) {
+        ctx.lineTo(i, canvas.height * 0.6 + Math.sin(i * 0.02) * 10);
+      }
+      ctx.stroke();
+      
       // Dibujar suelo
       const soilGradient = ctx.createLinearGradient(0, canvas.height * 0.7, 0, canvas.height);
       soilGradient.addColorStop(0, '#8B4513');
@@ -2042,7 +1852,7 @@
           const flowerY = tulip.y - tulip.stemHeight * tulip.bloomProgress;
           const currentBloomSize = tulip.bloomSize * (tulip.bloomProgress - 0.5) * 2;
           
-          // Dibujar pétalos
+          // Dibujar pétalos con forma de tulipán
           tulip.petals.forEach(petal => {
             const petalX = tulip.x + swayX + Math.cos(petal.angle) * currentBloomSize * 0.8;
             const petalY = flowerY + Math.sin(petal.angle) * currentBloomSize * 0.6;
